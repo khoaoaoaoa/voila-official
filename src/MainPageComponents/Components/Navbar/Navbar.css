@@ -1,0 +1,69 @@
+.css-dip3t8 {
+  background-color: rgb(249, 249, 249, 0.2) !important;
+}
+.css-ewdv3l {
+  /* ul tag */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+a.ps-active {
+  background: #833ab4; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to left,
+    #fcb045,
+    #fd1d1d,
+    #833ab4
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to left,
+    #fcb045,
+    #fd1d1d,
+    #833ab4
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.ps-active {
+  color: white;
+}
+.ps-menu-root {
+  height: 100%;
+}
+a.ps-menu-button:hover {
+  background-color: #efefef !important;
+  color: #4b4d4e !important;
+}
+.DisplayName {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.Main {
+  padding: 1rem;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.MainPromptOuterBackground {
+  width: 90%;
+  padding: 3rem;
+  background: rgb(242, 112, 156);
+  background: linear-gradient(
+    90deg,
+    rgba(242, 112, 156, 1) 0%,
+    rgba(255, 148, 114, 1) 100%
+  );
+  border-radius: 3rem;
+  height: 675px;
+  box-sizing: border-box;
+}
+.MainPromptInnerBackground {
+  background: white;
+  border-radius: 1.5rem;
+  height: 100%;
+  width: 100%;
+}

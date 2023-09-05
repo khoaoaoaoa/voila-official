@@ -1,0 +1,8 @@
+.SocialMediaMainContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    overflow-y: auto;
+    height: 100%;
+    padding: 2rem;
+}

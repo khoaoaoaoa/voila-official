@@ -1,0 +1,9 @@
+.MainPage {
+  display: flex;
+  flex-direction: row;
+  /* background-image: url("../../Assests/Main/MainBackground.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: left center; */
+  background-color: #ebebf8;
+}

@@ -1,0 +1,123 @@
+.FeedbackContainer {
+  position: relative;
+  background-color: #ebebf8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem 7rem;
+}
+.FeedbackHeader {
+  color: white;
+  margin-bottom: 2rem;
+  text-shadow: -5px 5px 4px #ff6184;
+  font-size: 2.5rem;
+}
+.Confetti {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+}
+.BlobBackground {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
+  z-index: 1;
+}
+#blobSvg1 {
+  position: absolute;
+  top: -30px;
+  right: -10px;
+}
+#blobSvg2 {
+  position: absolute;
+  top: 120px;
+  left: -10px;
+}
+#blobSvg3 {
+  position: absolute;
+  top: 0px;
+  left: -70px;
+}
+.Feedback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  width: 100%;
+}
+.FeedbackBar {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  background-color: black;
+  border-radius: 1rem;
+  width: 65%;
+}
+.FeedbackInputContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+.FeedbackBarHeader {
+  color: white;
+  margin-bottom: 0.75rem;
+}
+.FeedbackInput {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  border-radius: 2rem;
+  background-color: #d9d9d9;
+  padding-left: 1rem;
+  max-height: 2.25rem;
+  align-items: stretch;
+}
+.FeedbackInput > input {
+  background: transparent;
+  outline: none;
+  border: none;
+  width: 100%;
+  padding: 0.5rem;
+}
+.FeedbackSendInput {
+  width: 12rem;
+  background: var(--rainbow, linear-gradient(133deg, #7b4397 0%, #dc2430 100%));
+  color: white;
+  font-size: 0.75rem;
+}
+.FeedbackSubmitBtn {
+  padding: 0.5rem 1.5rem;
+  width: 200px;
+  border-radius: 1rem;
+  margin-left: 1.25rem;
+  background: linear-gradient(137deg, #ef629f 0%, #ffc500 100%);
+  color: white;
+  font-size: 1rem;
+}
+
+::-webkit-input-placeholder {
+  /* Edge */
+  font-weight: 700;
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  font-weight: 700;
+}
+
+::placeholder {
+  font-weight: 700;
+}

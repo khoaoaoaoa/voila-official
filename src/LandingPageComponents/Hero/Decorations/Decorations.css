@@ -1,0 +1,35 @@
+.Decorations {
+  position: absolute;
+  width: 125px;
+  height: 125px;
+}
+
+.Decorations-TopRight {
+  
+  top: calc( 7% + 72px );
+  right: 15%;
+}
+.Decorations-BottomLeft {
+
+  bottom: 7%;
+  left: 15%;
+}
+.Decorations-BottomRight {
+  
+  bottom: 7%;
+  right: 15%;
+}
+.Decorations-TopLeft {
+  top: calc( 7% + 72px );
+  left: 15%;
+}
+.Decorations-MiddleRight{
+    top: calc( 50% + 72px );
+    transform: translateY(-50%);
+    right: 2.5%;
+}
+.Decorations-MiddleLeft{
+    top: calc( 50% + 72px );
+    transform: translateY(-50%);
+    left: 2.5%;
+}

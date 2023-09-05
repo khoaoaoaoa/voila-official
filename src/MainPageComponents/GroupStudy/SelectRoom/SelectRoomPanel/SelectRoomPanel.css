@@ -1,0 +1,34 @@
+.RoomOption {
+  padding: 3rem;
+  border-radius: 1.5rem;
+  font-size: 2rem;
+  color: #6b6d6f;
+}
+.RoomOptionContainer {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.RoomOptionContainer > p {
+  margin-top: 1rem;
+}
+.SelectRoomHeader {
+  margin-bottom: 1rem;
+}
+
+.SelectRoomOptionsContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+.SelectRoomPanel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  background-color: #e5e7e7;
+}

@@ -1,0 +1,159 @@
+
+
+
+import { Editor } from "react-draft-wysiwyg";
+import "../../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { EditorState } from "draft-js";
+import { useState, useEffect } from "react";
+import "./TextEditor.css";
+import parse from "html-react-parser";
+import { Modifier, ContentState } from "draft-js";
+import { convertToRaw } from "draft-js";
+import draftToHtml from "draftjs-to-html";
+import htmlToDraft from "html-to-draftjs";
+
+
+
+
+
+// import ReactDOM from "react-dom";
+// import React, { useRef, useState } from "react";
+// import { Editor, EditorState } from "draft-js";
+// import "draft-js/dist/Draft.css";
+// import "./TextEditor.css";
+
+
+
+
+//   const [editorState, setEditorState] = useState();
+//   const [uploadedImages, setUploadedImages] = useState([]);
+//   const [text, setText] = useState("");
+//   useEffect(() => {
+//     setEditorState(EditorState.createEmpty());
+//   }, []);
+
+//   const uploadImageCallBack = (file) => {
+//     let uploadImages = uploadedImages;
+//     const imageObject = {
+//       file: file,
+//       localSrc: URL.createObjectURL(file),
+//     };
+//     uploadImages.push(imageObject);
+//     setUploadedImages(uploadImages);
+//     return new Promise((resolve, reject) => {
+//       resolve({ data: { link: imageObject.localSrc } });
+//     });
+//   };
+
+//   const hashConfig = {
+//     trigger: "#",
+//     separator: " ",
+//   };
+
+//   const customEntityTransform = (entity, text) => {
+//     if (entity.type !== "AUDIO") return;
+//     return `<a href="${entity.data.url}" target="_blank">${text}</a>`;
+//   };
+
+//   const addPtag = () => {
+//     const data = "";
+
+//     if (editorState) {
+//       let { contentBlocks, entityMap } = htmlToDraft(data);
+//       let contentState = Modifier.replaceWithFragment(
+//         editorState.getCurrentContent(),
+//         editorState.getSelection(),
+//         ContentState.createFromBlockArray(
+//           contentBlocks,
+//           entityMap
+//         ).getBlockMap()
+//       );
+//       console.log(contentBlocks);
+//       console.log(entityMap);
+
+//       setEditorState(EditorState.createWithContent(contentState));
+//     }
+//   };
+//   useEffect(() => {
+//     if (editorState) {
+//       const rawContentState = convertToRaw(editorState.getCurrentContent());
+
+//       const markup = draftToHtml(rawContentState, hashConfig);
+
+//       setText(markup);
+//     }
+//   }, [editorState]);
+
+  //   const editorRef = useRef();
+  //   const [editorState, setEditorState] = useState(() =>
+  //     EditorState.createEmpty()
+  //   );
+  //   const focus = () => {
+  //     editorRef.current.focus();
+  //   };
+  //   console.log("fđ");
+  //   return (
+  //     <div className="custom-editor" onClick={focus}>
+  //       <Editor
+  //         ref={editorRef}
+  //         editorState={editorState}
+  //         onChange={setEditorState}
+  //       />
+  //     </div>
+  //   );
+  // };
+
+
+
+
+
+
+
+
+
+
+
+<div>
+    //   <Editor
+    //     editorClassName="TextEditor"
+    //     toolbarClassName="TextEditorToolbar"
+    //     onEditorStateChange={(e) => setEditorState(e)}
+    //     toolbar={{
+    //       inline: { inDropdown: false },
+    //       list: { inDropdown: false },
+    //       textAlign: { inDropdown: false },
+    //       link: { inDropdown: true },
+    //       history: { inDropdown: false },
+    //       image: {
+    //         uploadCallback: uploadImageCallBack,
+    //         previewImage: true,
+    //         alt: { present: true, mandatory: false },
+    //         inputAccept: "image/gif,image/jpeg,image/jpg,image/png,image/svg",
+    //       },
+    //     }}
+    //     hashtag={{
+    //       ...hashConfig,
+    //     }}
+    //     mention={{
+    //       separator: " ",
+    //       trigger: "@",
+    //       suggestions: [
+    //         { text: "APPLE", value: "apple", url: "apple" },
+    //         { text: "BANANA", value: "banana", url: "banana" },
+    //         { text: "CHERRY", value: "cherry", url: "cherry" },
+    //         { text: "DURIAN", value: "durian", url: "durian" },
+    //         { text: "EGGFRUIT", value: "eggfruit", url: "eggfruit" },
+    //         { text: "FIG", value: "fig", url: "fig" },
+    //         { text: "GRAPEFRUIT", value: "grapefruit", url: "grapefruit" },
+    //         { text: "HONEYDEW", value: "honeydew", url: "honeydew" },
+    //       ],
+    //     }}
+    //   />
+    //   <div>{parse(text)}</div>
+    //   <button
+    //     onClick={() => {
+    //       addPtag();
+    //     }}>
+    //     DNSJ
+    //   </button>
+    // </div>

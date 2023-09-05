@@ -1,0 +1,15 @@
+.WaveFormbtn {
+  display: flex;
+  padding: 0.9375rem 1.875rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2.5rem;
+  background: linear-gradient(137deg, #ef629f 0%, #ffc500 100%);
+  color: #fff;
+  font-family: Quicksand;
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 0;
+  overflow: hidden;
+}

@@ -1,0 +1,142 @@
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: gainsboro;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #fdb914;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.SignUpFormContainer {
+  position: fixed;
+  top: 55%;
+  left: 50%;
+  background-color: white;
+  border-radius: 2rem;
+  z-index: 999;
+  width: 40%;
+  padding: 4rem 3.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-width: 350px;
+}
+
+.SignUpFormClose {
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  cursor: pointer;
+}
+.SignUpFormClose span {
+  font-size: 1.5rem;
+}
+.SignUpForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.SignUpForm h2 {
+  margin: 1rem 0;
+  font-weight: 700;
+  font-size: 2rem;
+}
+.SignUpInput {
+  margin: 1rem 0;
+}
+.SignUpbtn {
+  display: flex;
+  padding: 0.9375rem 1.875rem;
+  margin: 1rem 0;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2.5rem;
+  width: 100%;
+  background: linear-gradient(137deg, #ef629f 0%, #ffc500 100%);
+  color: #fff;
+  font-family: Quicksand;
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 0;
+  overflow: hidden;
+  position: relative;
+}
+.SignUpbtn span {
+  z-index: 10;
+}
+.SignUpbtn::after {
+  background: #fff;
+  content: "";
+  height: 155px;
+  left: -75px;
+  opacity: 0.2;
+  position: absolute;
+  top: -50px;
+  transform: rotate(35deg);
+  transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+  width: 50px;
+  z-index: -1;
+}
+.SignUpbtn:hover::after {
+  left: 120%;
+  z-index: 10;
+}
+.button:disabled,
+button[disabled] {
+  background: #cccccc !important;
+  color: #666666;
+}
+
+.PasswordChecklist > li > span {
+  display: block !important;
+  font-weight: 600;
+}
+.PasswordChecklist > li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.invalid {
+  color: #ff0033;
+}
+.valid {
+  color: #4bca81;
+}
+.SignUp-or-Container {
+  margin: 1rem 0;
+}
+.SignUpGoogleIconContainer {
+  margin: 1rem 0;
+  border-radius: 50%;
+  background-color: #407de7;
+  width: 3.5rem;
+  height: 3.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+

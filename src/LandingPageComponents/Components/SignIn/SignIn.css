@@ -1,0 +1,139 @@
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: gainsboro;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #fdb914;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.SignInFormContainer {
+  position: fixed;
+  top: 55%;
+  left: 50%;
+  background-color: white;
+  border-radius: 2rem;
+  z-index: 999;
+  width: 40%;
+  padding: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.Icon {
+  margin-bottom: 1.75rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.IconLine {
+  background: linear-gradient(137deg, #ef629f 0%, #ffc500 100%);
+  height: 3px;
+  width: 250px;
+  border-radius: 2rem;
+}
+
+.SignInFormClose {
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  cursor: pointer;
+}
+.SignInFormClose span {
+  font-size: 1.5rem;
+}
+.SignInForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+}
+.SignInForm h2 {
+  margin: 1rem 0;
+  font-weight: 700;
+  font-size: 2rem;
+}
+.SignInInput {
+  margin: 1rem 0;
+}
+.SignInbtn {
+  display: flex;
+  padding: 0.9375rem 1.875rem;
+  margin: 1rem 0;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2.5rem;
+  width: 100%;
+  background: linear-gradient(137deg, #ef629f 0%, #ffc500 100%);
+  color: #fff;
+  font-family: Quicksand;
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 0;
+  overflow: hidden;
+  position: relative;
+}
+.SignInbtn span {
+  z-index: 10;
+}
+.SignInbtn::after {
+  background: #fff;
+  content: "";
+  height: 155px;
+  left: -75px;
+  opacity: 0.2;
+  position: absolute;
+  top: -50px;
+  transform: rotate(35deg);
+  transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+  width: 50px;
+  z-index: -1;
+}
+.SignInbtn:hover::after {
+  left: 120%;
+  z-index: 10;
+}
+.SignIn-or-Container {
+  margin: 1rem 0;
+}
+.SignInGoogleIconContainer {
+  margin: 1rem 0;
+  border-radius: 50%;
+  background-color: #407de7;
+  width: 3.5rem;
+  height: 3.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.SignInOverlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgb(0, 0, 0, 0.4);
+  z-index: 998;
+}
