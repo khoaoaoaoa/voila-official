@@ -24,11 +24,13 @@ const SelectRoom = ({ formData, setFormData }) => {
       Tag: "",
     },
   });
+  console.log("roomData",selectRoomData.step)
   useEffect(() => {
     if (selectRoomData.step === 4) {
       setFormData(...formData, ...selectRoomData);
     }
   }, [selectRoomData.step]);
+
   const PageDisplay = () => {
     if (selectRoomData.step == 1) {
       return (

@@ -14,7 +14,7 @@ const GroupStudy = () => {
     MediaBlobURL: "",
     Share: "",
   });
-  console.log(formData);
+  console.log("formData",formData.step)
   const PageDisplay = () => {
     switch (formData.step) {
       case 1:

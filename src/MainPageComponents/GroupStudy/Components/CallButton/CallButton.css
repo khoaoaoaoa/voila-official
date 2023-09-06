@@ -1,0 +1,13 @@
+.CallButtonContainer {
+  padding: 1rem;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  color: white;
+  height: 55px;
+  width: 55px;
+  margin: 0rem 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
