@@ -1,32 +1,32 @@
 import React from "react";
 import "./Features.css";
-import AI from "../../Assests/AI.jpg";
+import Feynman from "../../Assests/Feynman.svg";
 import GroupStudy from "../../Assests/GroupStudy.jpg";
 import StudyMethods from "../../Assests/StudyMethods.jpg";
 import { ReactComponent as GreaterThan } from "../../Assests/greaterthan-circle-svgrepo-com.svg";
-import { useRef, useEffect } from "react";
+
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 
 const Features = () => {
   const CarouselChildArray = [
     {
-      imgURL: AI,
-      header: "Trí tuệ nhân tạo",
+      imgURL: Feynman,
+      header: "Kỹ thuật Feynman",
       contents:
-        "Cổ nhân có câu: 'Kẻ thức thời mới là trang tuấn kiệt', hãy tham gia vào nền tảng học tập đầy sôi động - Voila! để tận dụng những tính năng mạnh mẽ trong đó có ChatGPT - công nghệ AI làm thế giới chao đảo.",
+        "Richard Feynman là một nhà vật lý học đạt giải Nobel, và ông cũng là một nhà giáo vĩ đại. Kỹ thuật Feynman là một phương pháp học tập biến một kiến thức phức tạp trở nên thật dễ hiểu. Hãy để CoStudy giúp bạn tận dụng phương pháp này một cách thật hiệu quả! ",
     },
     {
       imgURL: GroupStudy,
       header: "Học tập hợp tác",
       contents:
-        "Học nhóm và thuyết trình là hai phương pháp học tập vô cùng quen thuộc và hiệu quả. Tuy nhiên không phải ai cũng biết những bí mật làm nên một bài thuyết trình hay một phiên học nhóm thành công, hãy để Voila! hỗ trợ bạn.",
+        "Học nhóm và thuyết trình là hai phương pháp học tập vô cùng quen thuộc và hiệu quả. Tuy nhiên không phải ai cũng biết những bí mật làm nên một bài thuyết trình hay một phiên học nhóm thành công, hãy để CoStudy hỗ trợ bạn.",
     },
     {
       imgURL: StudyMethods,
-      header: "Phương pháp học tập hiệu quả",
+      header: "Hệ thống phương pháp",
       contents:
-        "Bằng cách kết hợp có hệ thống các phương pháp tiếp cận đa dạng, Voila! đã giúp học sinh có thể tận dụng được sức mạnh cộng gộp của các phương pháp này nhằm hiểu sâu và nhớ lâu khái niệm đang học.",
+        "Bằng cách kết hợp có hệ thống các phương pháp học đa dạng, CoStudy đã giúp học sinh tận dụng được sức mạnh của các phương pháp học hiệu quả nhất nhằm hiểu sâu và nhớ lâu bài học.",
     },
   ];
 
@@ -47,7 +47,10 @@ const Features = () => {
                   onClick={clickHandler}
                   className="CarouselNavBtn CarouselNavLeftBtn">
                   <div>
-                    <GreaterThan width={50}  style={{ transform: 'rotateZ(180deg)'}}/>
+                    <GreaterThan
+                      width={50}
+                      style={{ transform: "rotateZ(180deg)" }}
+                    />
                   </div>
                 </button>
               );

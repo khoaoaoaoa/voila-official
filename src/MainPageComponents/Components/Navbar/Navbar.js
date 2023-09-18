@@ -2,17 +2,16 @@ import React from "react";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { sidebarClasses, menuClasses } from "react-pro-sidebar";
 import "./Navbar.css";
-import lightBulbBackground from "../../../Assests/Main/Navbar/lightBulbBackground.jpg";
+
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { faBook } from "@fortawesome/free-solid-svg-icons";
-import { faMicrophone } from "@fortawesome/free-solid-svg-icons";
+
 import { faShareNodes } from "@fortawesome/free-solid-svg-icons";
 import { faPeopleGroup } from "@fortawesome/free-solid-svg-icons";
 import { faGraduationCap } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAnglesRight } from "@fortawesome/free-solid-svg-icons";
-import { faAnglesLeft } from "@fortawesome/free-solid-svg-icons";
+import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { useAuthContext } from "../../../Context/AuthContext";
@@ -105,7 +104,12 @@ const Navbar = ({ GoalBar, Outlet }) => {
                 {" "}
                 Tài liệu
               </MenuItem>
-
+              <MenuItem
+                icon={<FontAwesomeIcon icon={faGear} />}
+                component={<Link to="feynman-technique" />}
+                active={location.pathname === "/main/feynman-technique"}>
+                Kỹ thuật Feynman
+              </MenuItem>
               <MenuItem
                 icon={<FontAwesomeIcon icon={faShareNodes} />}
                 component={<Link to="social-media" />}

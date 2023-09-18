@@ -58,16 +58,14 @@
   filter: drop-shadow(-7px 6px 4px rgba(255, 0, 0, 0.35));
 }
 .AboutPrjText h3 {
-  filter: drop-shadow(-3px 2px 2px #f3496e);
+  text-shadow: -5px 5px 3px rgba(255, 0, 0, 0.35);
+  color: white;
   font-family: Quicksand;
   font-size: 2rem;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  background: var(--rainbow, linear-gradient(133deg, #7b4397 0%, #dc2430 100%));
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+
   
 }
 .AboutPrjText p {

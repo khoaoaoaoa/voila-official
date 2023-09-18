@@ -11,11 +11,11 @@ const Footer = () => {
       <div className="Footer">
         <div className="LinkContainer">
           <div className="ProductOutro">
-            <h3>Voila!</h3>
+            <h3>CoStudy</h3>
 
             <p className="ProductOutroDescription">
-              Nền tảng học tập trực tuyến năng động, ứng dụng công nghệ để đem
-              lại hiệu quả tối ưu
+              Học trực tuyến hiệu quả với kỹ thuật Feynman và phương pháp học
+              nhóm luân chuyển vai trò
             </p>
             <p>Made by Khoaaa</p>
           </div>

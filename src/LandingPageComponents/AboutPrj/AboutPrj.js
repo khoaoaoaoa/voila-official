@@ -30,7 +30,7 @@ const AboutPrj = () => {
               học sinh, sinh viên Việt Nam đang học trên các nền tảng giáo dục
               trực tuyến mỗi ngày. Và với mong muốn lan tỏa lợi ích giáo dục{" "}
             </p>
-            <h3>Voila! ra đời</h3>
+            <h3>Nền tảng CoStudy ra đời!</h3>
           </div>
           <Tilt tiltEnable>
             <Lottie

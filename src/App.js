@@ -11,14 +11,15 @@ import SocialMedia from "./MainPageComponents/SocialMedia/SocialMedia";
 import Materials from "./MainPageComponents/Materials/Materials";
 import GroupStudy from "./MainPageComponents/GroupStudy/GroupStudy";
 import FlashcardsReview from "./MainPageComponents/FlashcardsReview/FlashcardsReview";
-import { VoicePortalContextProvider } from "./Context/VoicePortalContext";
+
 import NewPost from "./MainPageComponents/SocialMedia/NewPost/NewPost";
 import ContentSide from "./MainPageComponents/SocialMedia/ContentSide/ContentSide";
+import FeynmanTechnique from "./MainPageComponents/FeynmanTechnique/FeynmanTechnique";
 function App() {
   return (
     <BrowserRouter>
       <AuthContextProvider>
-        <VoicePortalContextProvider>
+    
           <div className="App">
             <ToastContainer
               position="top-right"
@@ -43,7 +44,8 @@ function App() {
                   </SpinnerLoading>
                 }>
                 {" "}
-                <Route index element={<SocialMedia />} />
+                <Route index element={<FeynmanTechnique/>} />
+                <Route path="feynman-technique" element={<FeynmanTechnique/>} />
                 <Route path="social-media" element={<SocialMedia />}>
                   <Route index element={<ContentSide />} />
                   <Route path="new-post" element={<NewPost />} />
@@ -76,7 +78,6 @@ function App() {
               />
             </Routes>
           </div>
-        </VoicePortalContextProvider>
       </AuthContextProvider>
     </BrowserRouter>
   );
