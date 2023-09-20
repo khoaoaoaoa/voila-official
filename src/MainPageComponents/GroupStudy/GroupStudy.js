@@ -30,7 +30,7 @@ const GroupStudy = () => {
   return (
     <>
       <div className="GroupStudyBackground">
-       <PersonalRoom/>
+       <GroupRoom/>
       </div>
     </>
   );
