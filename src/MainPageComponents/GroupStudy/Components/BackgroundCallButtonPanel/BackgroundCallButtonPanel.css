@@ -1,9 +1,0 @@
-.BackgroundCallButtonPanel{
-    background-color: rgb(231, 231, 233, 0.4);
-    border-radius: 50rem;
-    padding: 0.5rem 2rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center
-}
