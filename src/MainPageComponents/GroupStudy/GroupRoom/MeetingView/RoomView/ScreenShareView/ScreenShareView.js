@@ -4,6 +4,8 @@ import { useParticipant } from "@videosdk.live/react-sdk";
 import { useMemo, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import "./ScreenShareView.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faThumbtack } from "@fortawesome/free-solid-svg-icons";
 const ScreenShareView = (props) => {
   const screenShareAudioRef = useRef(null);
   const {
@@ -14,6 +16,7 @@ const ScreenShareView = (props) => {
     unpin,
     pinState,
     isLocal,
+    displayName
   } = useParticipant(props.participantId);
 
   //screenShareStream
@@ -53,6 +56,7 @@ const ScreenShareView = (props) => {
             playsInline
             muted={isLocal}
           />
+          <p className="displayName">{isLocal ? "You" : displayName}</p>
           <button
           className="pinButton"
             onClick={() => {
@@ -62,7 +66,7 @@ const ScreenShareView = (props) => {
                 pin("SHARE");
               }
             }}>
-            pinScreen
+           <FontAwesomeIcon icon={faThumbtack} />
           </button>
           <ReactPlayer
             //

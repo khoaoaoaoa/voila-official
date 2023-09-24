@@ -2,6 +2,10 @@ import React from "react";
 import { useParticipant } from "@videosdk.live/react-sdk";
 import { useRef, useMemo, useEffect } from "react";
 import ReactPlayer from "react-player";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faThumbtack } from "@fortawesome/free-solid-svg-icons";
+import { faVideoSlash } from "@fortawesome/free-solid-svg-icons";
+import { faMicrophoneSlash } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import "./ParticipantView.css";
 function ParticipantView(props) {
@@ -13,7 +17,6 @@ function ParticipantView(props) {
     micOn,
     isLocal,
     displayName,
-    screenShareOn,
     pin,
     unpin,
     pinState,
@@ -48,21 +51,32 @@ function ParticipantView(props) {
         {micOn ? "ON" : "OFF"} | ScreenShare : {screenShareOn ? "ON" : "OFF"}
       </p> */}
       <audio ref={micRef} autoPlay playsInline muted={isLocal} />
-
+      <div className="indicator">
+        {!micOn && (
+          <div className="micCamIndicator">
+            <FontAwesomeIcon icon={faMicrophoneSlash} />
+          </div>
+        )}
+        {!webcamOn && (
+          <div className="micCamIndicator">
+            <FontAwesomeIcon icon={faVideoSlash} />
+          </div>
+        )}
+      </div>
+      <p className="displayName">{isLocal ? "You" : displayName}</p>
+      <button
+        className="pinButton"
+        onClick={() => {
+          if (pinState.cam === true) {
+            unpin("CAM");
+          } else {
+            pin("CAM");
+          }
+        }}>
+        <FontAwesomeIcon icon={faThumbtack} />
+      </button>
       {webcamOn && (
         <>
-          <p className="displayName">{displayName}</p>
-          <button
-            className="pinButton"
-            onClick={() => {
-              if (pinState.cam === true) {
-                unpin("CAM");
-              } else {
-                pin("CAM");
-              }
-            }}>
-            pinCamera
-          </button>
           <ReactPlayer
             //
             className="CameraPlayer"

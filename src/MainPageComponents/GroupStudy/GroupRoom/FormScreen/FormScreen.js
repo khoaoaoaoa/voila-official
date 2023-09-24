@@ -57,6 +57,7 @@ const FormScreen = (props) => {
         <div className="titleContainer">
           <h1>Title</h1>
           <input
+            required
             type="text"
             name="roomName"
             onChange={(e) => {

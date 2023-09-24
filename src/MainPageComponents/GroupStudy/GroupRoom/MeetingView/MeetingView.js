@@ -49,7 +49,7 @@ function MeetingView(props) {
     } else if (joined && joined == "JOINING") {
       return <p>Joining</p>;
     } else if (joined && joined == "JOINED") {
-      return <RoomView participants={participants} />;
+      return <RoomView participants={participants} meetingId={props.meetingId}/>;
     }
   };
   return (
