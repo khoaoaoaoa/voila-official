@@ -43,15 +43,17 @@ function ParticipantView(props) {
 
   return (
     <div className="ParticipantView GridElement">
-      <p>
+      {/* <p>
         Participant: {displayName} | Webcam: {webcamOn ? "ON" : "OFF"} | Mic:{" "}
         {micOn ? "ON" : "OFF"} | ScreenShare : {screenShareOn ? "ON" : "OFF"}
-      </p>
+      </p> */}
       <audio ref={micRef} autoPlay playsInline muted={isLocal} />
 
       {webcamOn && (
         <>
+          <p className="displayName">{displayName}</p>
           <button
+            className="pinButton"
             onClick={() => {
               if (pinState.cam === true) {
                 unpin("CAM");

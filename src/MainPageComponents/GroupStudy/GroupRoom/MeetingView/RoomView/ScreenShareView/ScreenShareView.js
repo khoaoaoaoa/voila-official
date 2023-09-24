@@ -3,6 +3,7 @@ import ReactPlayer from "react-player";
 import { useParticipant } from "@videosdk.live/react-sdk";
 import { useMemo, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
+import "./ScreenShareView.css";
 const ScreenShareView = (props) => {
   const screenShareAudioRef = useRef(null);
   const {
@@ -52,8 +53,8 @@ const ScreenShareView = (props) => {
             playsInline
             muted={isLocal}
           />
-
           <button
+          className="pinButton"
             onClick={() => {
               if (pinState.share === true) {
                 unpin("SHARE");
