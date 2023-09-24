@@ -1,0 +1,19 @@
+.Controls{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    left: 35%;
+    transform: translateX(-50%);
+    width: 268px;
+}
+.Controls > button {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background-color: black;
+    color: white;
+    font-size: 1.25rem;
+}

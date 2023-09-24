@@ -5,7 +5,7 @@ import MainPage from "./MainPageComponents/MainPage/MainPage";
 import { AuthContextProvider } from "./Context/AuthContext";
 import NotFound from "./404NotFound/404NotFound.js";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
-import SpinnerLoading from "./LandingPageComponents/Components/SpinnerLoading/SpinnerLoading";
+import SpinnerLoading from "./Components/SpinnerLoading/SpinnerLoading";
 import { ToastContainer } from "react-toastify";
 import SocialMedia from "./MainPageComponents/SocialMedia/SocialMedia";
 import Materials from "./MainPageComponents/Materials/Materials";

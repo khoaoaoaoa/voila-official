@@ -1,12 +1,12 @@
 import React from "react";
 import "./MeetingView.css";
 import { useMeeting } from "@videosdk.live/react-sdk";
-import { useState } from "react";
-import ParticipantView from "./ParticipantView/ParticipantView.js";
-import Controls from "./Controls/Controls";
-
+import { useState, useEffect } from "react";
+import FormScreen from "../FormScreen/FormScreen";
+import RoomView from "./RoomView/RoomView";
 function MeetingView(props) {
-  const [joined, setJoined] = useState(null);
+  const [joined, setJoined] = useState("FORM");
+  //   const [gridClassName, setGridClassName] = useState("");
   //Get the method which will be used to join the meeting.
   //We will also get the participants list to display all participants
   const { join, participants } = useMeeting({
@@ -18,32 +18,44 @@ function MeetingView(props) {
     onMeetingLeft: () => {
       props.onMeetingLeave();
     },
+    onPresenterChanged: () => {},
+    onParticipantJoined: () => {},
+    onParticipantLeft: () => {},
   });
+
   const joinMeeting = () => {
     setJoined("JOINING");
     join();
   };
+  const joinWaitingScreen = () => {
+    setJoined("WAIT");
+  };
 
-  return (
-    <div className="container">
-      <h3>Meeting Id: {props.meetingId}</h3>
-      {joined && joined == "JOINED" ? (
+  const phaseDisplay = () => {
+    if (joined && joined == "FORM") {
+      return (
+        <FormScreen
+          meetingId={props.meetingId}
+          joinWaitingScreen={joinWaitingScreen}
+        />
+      );
+    } else if (joined && joined == "WAIT") {
+      return (
         <div>
-          <Controls />
-          //For rendering all the participants in the meeting
-          {[...participants.keys()].map((participantId) => (
-            <ParticipantView
-              participantId={participantId}
-              key={participantId}
-            />
-          ))}
+          <h3>Meeting Id: {props.meetingId}</h3>
+          <button onClick={joinMeeting}>Join</button>
         </div>
-      ) : joined && joined == "JOINING" ? (
-        <p>Joining the meeting...</p>
-      ) : (
-        <button onClick={joinMeeting}>Join</button>
-      )}
-    </div>
+      );
+    } else if (joined && joined == "JOINING") {
+      return <p>Joining</p>;
+    } else if (joined && joined == "JOINED") {
+      return <RoomView participants={participants} />;
+    }
+  };
+  return (
+    <>
+      {phaseDisplay()}
+    </>
   );
 }
 

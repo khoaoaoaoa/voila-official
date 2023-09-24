@@ -1,0 +1,20 @@
+.RoomView {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: relative;
+}
+.CameraGrid {
+  display: grid;
+  border-radius: 2rem;
+  width: 75%;
+  height: 87.5%;
+  background-color: #daeef7;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-rows: auto;
+  grid-auto-rows: auto;
+  grid-auto-columns: 1fr;
+  gap: 10px;
+  overflow-y: auto;
+  padding: 10px;
+}

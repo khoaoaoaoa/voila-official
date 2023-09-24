@@ -15,3 +15,4 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore();
 export const usersColRef = collection(db, "users");
+export const roomsColRef = collection(db, "rooms");

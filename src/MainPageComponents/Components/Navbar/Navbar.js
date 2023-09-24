@@ -37,7 +37,7 @@ const Navbar = ({ GoalBar, Outlet }) => {
   const { user, userDocRef } = useAuthContext();
   const [displayName, setDisplayName] = useState("");
   useEffect(() => {
-    setDisplayName(userDocRef?.data()?.displayName);
+    setDisplayName(userDocRef?.data()?.username);
   }, [userDocRef]);
 
   return (

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import PropagateLoader from "react-spinners/PropagateLoader";
 import { motion } from "framer-motion";
-const SpinnerLoading = ({ children }) => {
+const SpinnerLoading = ({ children, time }) => {
   const [loading, setLoading] = useState(true);
   console.log(loading);
   useEffect(() => {
-    const timeout = setTimeout(() => setLoading(false), 1000);
+    const timeout = setTimeout(() => setLoading(false), time ? time : 1000);
     console.log(loading);
     return () => clearTimeout(timeout);
   }, []);

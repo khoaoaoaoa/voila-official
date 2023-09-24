@@ -8,8 +8,16 @@ import {
   faVideo,
   faKeyboard,
 } from "@fortawesome/free-solid-svg-icons";
-function JoinScreen({ getMeetingAndToken }) {
+function JoinScreen({ getMeetingAndToken, handleCreateRoomFirebase }) {
   const [meetingId, setMeetingId] = useState(null);
+
+
+  const handleCreateRoom = async () => {
+    const meetingId = await getMeetingAndToken(null);
+    await handleCreateRoomFirebase(meetingId);
+  }
+
+  
   return (
     <div className="JoinScreen">
       <h1>
@@ -17,7 +25,7 @@ function JoinScreen({ getMeetingAndToken }) {
         <FontAwesomeIcon icon={faMusic} />{" "}
       </h1>
       <button
-        onClick={async () => await getMeetingAndToken(null)}
+        onClick={() => handleCreateRoom()}
         className="CreateMeetingButton">
         <FontAwesomeIcon icon={faVideo} style={{ marginRight: "0.5rem" }} />
         <span>Create Meeting</span>

@@ -45,8 +45,9 @@ const SignUp = ({ onClose }) => {
         registerPassword
       );
       await setDoc(doc(usersColRef, cred.user.uid), {
-        displayName: registerUsername,
+        username: registerUsername,
         uid: cred.user.uid,
+        email: registerEmail
       });
       toast.success("Đăng ký thành công!");
       onClose();
