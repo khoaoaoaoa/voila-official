@@ -12,6 +12,13 @@
   align-items: center;
   justify-content: space-between;
 }
+.ValidateParticipantsButton{
+  border-radius: 0.5rem;
+  color: white;
+  font-weight: bold;
+  padding: 1rem;
+  background-color: #00AA1C;
+}
 .FunctionalSide {
   height: 75%;
   width: 100%;
@@ -22,7 +29,8 @@
 .FeatureSide {
   display: flex;
   flex-direction: column;
-  width: 35%;
+  margin-left: 2rem;
+  min-width: 35%;
 }
 .CameraGrid {
   display: grid;

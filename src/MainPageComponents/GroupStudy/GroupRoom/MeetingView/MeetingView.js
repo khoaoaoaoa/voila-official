@@ -3,24 +3,36 @@ import "./MeetingView.css";
 import { useMeeting } from "@videosdk.live/react-sdk";
 import { useState, useEffect } from "react";
 import FormScreen from "../FormScreen/FormScreen";
+import { setDoc, doc, deleteDoc } from "firebase/firestore";
+import { roomsColRef } from "../../../../Firebase/config";
 import RoomView from "./RoomView/RoomView";
+import { useAuthContext } from "../../../../Context/AuthContext";
 function MeetingView(props) {
   const [joined, setJoined] = useState("FORM");
-  //   const [gridClassName, setGridClassName] = useState("");
-  //Get the method which will be used to join the meeting.
-  //We will also get the participants list to display all participants
+  const [participantsList, setParticipantsList] = useState([]);
+  const { userDocRef } = useAuthContext();
+
   const { join, participants } = useMeeting({
     //callback for when meeting is joined successfully
-    onMeetingJoined: () => {
+    onMeetingJoined: async () => {
       setJoined("JOINED");
+      await setDoc(
+        doc(
+          roomsColRef,
+          props.meetingId,
+          "participants",
+          userDocRef.data().uid
+        ),
+        { uid: userDocRef.data().uid, username: userDocRef.data().username }
+      );
     },
     //callback for when meeting is left
-    onMeetingLeft: () => {
+    onMeetingLeft: async () => {
       props.onMeetingLeave();
+      await deleteDoc(
+        doc(roomsColRef, props.meetingId, "participants", userDocRef.data().uid)
+      );
     },
-    onPresenterChanged: () => {},
-    onParticipantJoined: () => {},
-    onParticipantLeft: () => {},
   });
 
   const joinMeeting = () => {
@@ -49,14 +61,12 @@ function MeetingView(props) {
     } else if (joined && joined == "JOINING") {
       return <p>Joining</p>;
     } else if (joined && joined == "JOINED") {
-      return <RoomView participants={participants} meetingId={props.meetingId}/>;
+      return (
+        <RoomView participants={participants} meetingId={props.meetingId} />
+      );
     }
   };
-  return (
-    <>
-      {phaseDisplay()}
-    </>
-  );
+  return <>{phaseDisplay()}</>;
 }
 
 export default MeetingView;

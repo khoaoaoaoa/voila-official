@@ -5,6 +5,7 @@ import {
   faComments,
   faScroll,
   faBookOpenReader,
+  faAddressBook,
 } from "@fortawesome/free-solid-svg-icons";
 const FeatureButtons = () => {
   return (
@@ -17,7 +18,7 @@ const FeatureButtons = () => {
           <FontAwesomeIcon icon={faScroll} />
         </button>
         <button>
-          <FontAwesomeIcon icon={faBookOpenReader} />
+          <FontAwesomeIcon icon={faAddressBook} />
         </button>
       </div>
     </>

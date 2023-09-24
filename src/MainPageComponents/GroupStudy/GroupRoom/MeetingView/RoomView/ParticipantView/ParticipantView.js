@@ -46,10 +46,6 @@ function ParticipantView(props) {
 
   return (
     <div className="ParticipantView GridElement">
-      {/* <p>
-        Participant: {displayName} | Webcam: {webcamOn ? "ON" : "OFF"} | Mic:{" "}
-        {micOn ? "ON" : "OFF"} | ScreenShare : {screenShareOn ? "ON" : "OFF"}
-      </p> */}
       <audio ref={micRef} autoPlay playsInline muted={isLocal} />
       <div className="indicator">
         {!micOn && (
