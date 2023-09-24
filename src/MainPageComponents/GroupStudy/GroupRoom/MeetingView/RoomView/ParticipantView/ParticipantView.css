@@ -1,12 +1,17 @@
 .ParticipantView {
   display: flex;
   flex-direction: column;
+  align-items: center;
   padding: 0;
   margin: 0;
   position: relative;
   flex-wrap: wrap;
+  background-color: #8fcff2;
+  border-radius: 1rem;
 }
-
+.CameraPlayer {
+  display: flex;
+}
 .pinButton {
   position: absolute;
   left: 0;

@@ -31,7 +31,7 @@ const RoomView = ({ participants }) => {
           ))}
         </div>
         <div className="FeatureSide">
-          <Features/>
+          <Features />
         </div>
       </div>
     </div>
