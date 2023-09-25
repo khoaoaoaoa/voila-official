@@ -20,11 +20,9 @@ import { auth } from "../../../Firebase/config";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 const Navbar = ({ GoalBar, Outlet }) => {
-  
   const location = useLocation();
   const navigate = useNavigate();
   const [isCollapsed, setIsCollapsed] = useState(false);
-  console.log(location.pathname);
   const handleSignOut = async () => {
     try {
       navigate("/", { replace: true });
@@ -38,7 +36,7 @@ const Navbar = ({ GoalBar, Outlet }) => {
   const [displayName, setDisplayName] = useState("");
   useEffect(() => {
     setDisplayName(userDocRef?.data()?.username);
-  }, [userDocRef]);
+  }, []);
 
   return (
     <>
@@ -100,34 +98,34 @@ const Navbar = ({ GoalBar, Outlet }) => {
               <MenuItem
                 icon={<FontAwesomeIcon icon={faBook} />}
                 component={<Link to="materials" />}
-                active={location.pathname === "/main/materials"}>
+                active={location.pathname.includes("/main/materials")}>
                 {" "}
                 Tài liệu
               </MenuItem>
               <MenuItem
                 icon={<FontAwesomeIcon icon={faGear} />}
-                component={<Link to="feynman-technique" />}
-                active={location.pathname === "/main/feynman-technique"}>
+                component={<Link to="feynmanTechnique" />}
+                active={location.pathname.includes("/main/feynmanTechnique")}>
                 Kỹ thuật Feynman
               </MenuItem>
               <MenuItem
                 icon={<FontAwesomeIcon icon={faShareNodes} />}
-                component={<Link to="social-media" />}
-                active={location.pathname === "/main/social-media"}>
+                component={<Link to="socialMedia" />}
+                active={location.pathname.includes("/main/socialMedia")}>
                 {" "}
                 Cộng đồng học tập Voila!
               </MenuItem>
               <MenuItem
                 icon={<FontAwesomeIcon icon={faPeopleGroup} />}
-                component={<Link to="group-study" />}
-                active={location.pathname === "/main/group-study"}>
+                component={<Link to="groupStudy" />}
+                active={location.pathname.includes("/main/groupStudy")}>
                 {" "}
                 Học nhóm
               </MenuItem>
               <MenuItem
                 icon={<FontAwesomeIcon icon={faGraduationCap} />}
-                component={<Link to="flashcards-review" />}
-                active={location.pathname === "/main/flashcards-review"}>
+                component={<Link to="flashcardsReview" />}
+                active={location.pathname.includes("/main/flashcardsReview")}>
                 {" "}
                 Ôn tập bài học
               </MenuItem>

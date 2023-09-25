@@ -5,7 +5,7 @@ import { deleteDoc, addDoc, updateDoc } from "firebase/firestore";
 import { roomsColRef } from "../../../../Firebase/config";
 import "./FormScreen.css";
 import { toast } from "react-toastify";
-const FormScreen = (props) => {
+const FormScreen = ({meetingId, joinWaitingScreen}) => {
   const [timeline, setTimeline] = useState([]);
   const [roomName, setRoomName] = useState("");
   const [inputStop, setInputStop] = useState({
@@ -14,18 +14,19 @@ const FormScreen = (props) => {
   });
   const timelineSubColRef = collection(
     roomsColRef,
-    `${props.meetingId}`,
+    meetingId,
     "timeline"
   );
+   
   //Gui titile di
   const handleSubmit = async () => {
     try {
-      await updateDoc(doc(roomsColRef, props.meetingId), {
+      await updateDoc(doc(roomsColRef, meetingId), {
         roomName: roomName,
       });
-      props.joinWaitingScreen();
+      joinWaitingScreen();
     } catch (err) {
-      toast.error(err.message);
+      console.log(err);
     }
   };
 
@@ -85,7 +86,7 @@ const FormScreen = (props) => {
           <div className="GridTimeline">
             {timeline.map((stop) => (
               <>
-                <div className="StopContainer">
+                <div className="StopContainer" key={stop.id}>
                   <input type="time" value={stop?.time} disabled />
                   <input type="text" value={stop?.content} disabled />
                   <button onClick={() => handleDeleteStop(stop.id)}>

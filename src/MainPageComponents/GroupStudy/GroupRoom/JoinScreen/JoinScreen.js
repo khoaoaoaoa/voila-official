@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import "./JoinScreen.css";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMusic,
@@ -8,16 +9,15 @@ import {
   faVideo,
   faKeyboard,
 } from "@fortawesome/free-solid-svg-icons";
-function JoinScreen({ getMeetingAndToken, handleCreateRoomFirebase }) {
+function JoinScreen({ getMeetingAndToken, handleCreateRoomFirebase, setWaitForRoom }) {
   const [meetingId, setMeetingId] = useState(null);
-
 
   const handleCreateRoom = async () => {
     const meetingId = await getMeetingAndToken(null);
     await handleCreateRoomFirebase(meetingId);
-  }
+    setWaitForRoom(false);
+  };
 
-  
   return (
     <div className="JoinScreen">
       <h1>
@@ -25,12 +25,14 @@ function JoinScreen({ getMeetingAndToken, handleCreateRoomFirebase }) {
         <FontAwesomeIcon icon={faMusic} />{" "}
       </h1>
       <button
-        onClick={() => handleCreateRoom()}
+        onClick={async () => {
+          await handleCreateRoom();
+        }}
         className="CreateMeetingButton">
         <FontAwesomeIcon icon={faVideo} style={{ marginRight: "0.5rem" }} />
         <span>Create Meeting</span>
       </button>
-      <p style={{margin: "1rem 0"}}>hoặc</p>
+      <p style={{ margin: "1rem 0" }}>hoặc</p>
       <div className="JoinScreenJoinPanel">
         <div className="JoinScreenInput">
           <FontAwesomeIcon icon={faKeyboard} />
@@ -42,7 +44,13 @@ function JoinScreen({ getMeetingAndToken, handleCreateRoomFirebase }) {
             }}
           />
         </div>
-        <button onClick={async () => await getMeetingAndToken(meetingId)} className="JoinMeetingButton" disabled={!meetingId}>
+        <button
+          onClick={() => {
+            getMeetingAndToken(meetingId);
+            setWaitForRoom(false);
+          }}
+          className="JoinMeetingButton"
+          disabled={!meetingId}>
           Join
         </button>
       </div>

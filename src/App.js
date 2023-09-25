@@ -15,69 +15,73 @@ import FlashcardsReview from "./MainPageComponents/FlashcardsReview/FlashcardsRe
 import NewPost from "./MainPageComponents/SocialMedia/NewPost/NewPost";
 import ContentSide from "./MainPageComponents/SocialMedia/ContentSide/ContentSide";
 import FeynmanTechnique from "./MainPageComponents/FeynmanTechnique/FeynmanTechnique";
+import GroupRoom from "./MainPageComponents/GroupStudy/GroupRoom/GroupRoom";
+import PersonalRoom from "./MainPageComponents/GroupStudy/PersonalRoom/PersonalRoom";
+import MeetingView from "./MainPageComponents/GroupStudy/GroupRoom/MeetingView/MeetingView";
 function App() {
   return (
     <BrowserRouter>
       <AuthContextProvider>
-    
-          <div className="App">
-            <ToastContainer
-              position="top-right"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-            />
-            <Routes>
-              <Route
-                path="/main"
-                element={
-                  <SpinnerLoading key={0}>
-                    <ProtectedRoute>
-                      <MainPage />
-                    </ProtectedRoute>
-                  </SpinnerLoading>
-                }>
-                {" "}
-                <Route index element={<FeynmanTechnique/>} />
-                <Route path="feynman-technique" element={<FeynmanTechnique/>} />
-                <Route path="social-media" element={<SocialMedia />}>
-                  <Route index element={<ContentSide />} />
-                  <Route path="new-post" element={<NewPost />} />
-                  <Route path="news" element={<ContentSide />} />
-                </Route>
-                <Route path="materials" element={<Materials />} />
-                <Route path="group-study" element={<GroupStudy />} />
-                <Route
-                  path="flashcards-review"
-                  element={<FlashcardsReview />}
-                />
+        <div className="App">
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
+          <Routes>
+            <Route
+              path="/main"
+              element={
+                <SpinnerLoading key={0}>
+                  <ProtectedRoute>
+                    <MainPage />
+                  </ProtectedRoute>
+                </SpinnerLoading>
+              }>
+              {" "}
+              <Route index element={<FeynmanTechnique />} />
+              <Route path="feynmanTechnique" element={<FeynmanTechnique />} />
+              <Route path="social-media" element={<SocialMedia />}>
+                <Route index element={<ContentSide />} />
+                <Route path="newPost" element={<NewPost />} />
+                <Route path="news" element={<ContentSide />} />
               </Route>
+              <Route path="materials" element={<Materials />} />
+              <Route path="groupStudy" element={<GroupStudy />}>
+                <Route path="personalRoom" element={<PersonalRoom />} />
+                <Route path="groupRoom" element={<GroupRoom />}>
+                  <Route path=":meetingId" element={<MeetingView />} />
+                </Route>
+              </Route>
+              <Route path="flashcardsReview" element={<FlashcardsReview />} />
+            </Route>
 
-              <Route
-                path="/"
-                element={
-                  <SpinnerLoading key={1}>
-                    <Homepage />
-                  </SpinnerLoading>
-                }
-              />
+            <Route
+              path="/"
+              element={
+                <SpinnerLoading key={1}>
+                  <Homepage />
+                </SpinnerLoading>
+              }
+            />
 
-              <Route
-                path="*"
-                element={
-                  <SpinnerLoading key={2}>
-                    <NotFound />{" "}
-                  </SpinnerLoading>
-                }
-              />
-            </Routes>
-          </div>
+            <Route
+              path="*"
+              element={
+                <SpinnerLoading key={2}>
+                  <NotFound />{" "}
+                </SpinnerLoading>
+              }
+            />
+          </Routes>
+        </div>
       </AuthContextProvider>
     </BrowserRouter>
   );
