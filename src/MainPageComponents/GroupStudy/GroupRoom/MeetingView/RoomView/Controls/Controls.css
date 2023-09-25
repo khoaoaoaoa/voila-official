@@ -3,13 +3,12 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 268px;
+  width: 228px;
   z-index: 500;
-  transform: translateX(-50%);
 }
 .Controls > button {
-  width: 55px;
-  height: 55px;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
   background-color: black;
   color: white;

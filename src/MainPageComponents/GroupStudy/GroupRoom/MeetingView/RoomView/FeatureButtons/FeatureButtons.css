@@ -4,11 +4,11 @@
   justify-content: space-between;
   align-items: center;
   z-index: 500;
-  width: 197px;
+  width: 167px;
 }
 .FeatureButtons > button {
-  width: 55px;
-  height: 55px;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
   background: rgb(242, 112, 156);
   background: linear-gradient(

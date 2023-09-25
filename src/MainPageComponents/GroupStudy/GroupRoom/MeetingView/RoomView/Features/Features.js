@@ -3,11 +3,11 @@ import "./Features.css";
 import ChatBox from "./ChatBox/ChatBox"
 import ScriptBox from "./ScriptBox/ScriptBox";
 import ParticipantsList from "./ParticipantsList/ParticipantsList";
-const Features = () => {
+const Features = ({participantsList, participantsVideoSDK}) => {
   return (
     <>
       <div className="Features">
-        <ParticipantsList/>
+        <ParticipantsList participantsList={participantsList}/>
       </div>
     </>
   )

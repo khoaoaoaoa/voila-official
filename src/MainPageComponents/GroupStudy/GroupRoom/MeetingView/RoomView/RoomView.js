@@ -13,7 +13,14 @@ import "./RoomView.css";
 const RoomView = ({ participants, meetingId }) => {
   const [room, setRoom] = useState(null);
   const [timeline, setTimeline] = useState([]);
+  const [participantsList, setParticipantsList] = useState([]);
   const timelineSubColRef = collection(roomsColRef, `${meetingId}`, "timeline");
+  const participantsSubColRef = collection(
+    roomsColRef,
+    `${meetingId}`,
+    "participants"
+  );
+
   useEffect(() => {
     onSnapshot(doc(roomsColRef, meetingId), (snapshot) => {
       setRoom(snapshot.data());
@@ -21,8 +28,13 @@ const RoomView = ({ participants, meetingId }) => {
     onSnapshot(timelineSubColRef, (snapshot) => {
       setTimeline(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
+    onSnapshot(participantsSubColRef, (snapshot) => {
+      setParticipantsList(
+        snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      );
+    });
   }, []);
-  console.log(participants);
+  console.log(participantsList);
   return (
     <div className="RoomView">
       <div className="RoomViewHeader">
@@ -32,32 +44,36 @@ const RoomView = ({ participants, meetingId }) => {
         </button>
       </div>
       <div className="FunctionalSide">
-        <div className="CameraGrid">
-          {[...participants.keys()].map((participantId) => (
-            <>
-              <ParticipantView
-                participantId={participantId}
-                key={participantId}
-              />
-            </>
-          ))}
-          {[...participants.keys()].map((participantId) => (
-            <>
-              <ScreenShareView
-                participantId={participantId}
-                key={participantId}
-              />
-            </>
-          ))}
+        <div className="CameraSideContainer">
+          <div className="CameraGrid">
+            {[...participants.keys()].map((participantId) => (
+              <>
+                <ParticipantView
+                  participantId={participantId}
+                  key={participantId}
+                />
+              </>
+            ))}
+            {[...participants.keys()].map((participantId) => (
+              <>
+                <ScreenShareView
+                  participantId={participantId}
+                  key={participantId}
+                />
+              </>
+            ))}
+          </div>
+          <div className="ControlButtonsContainer">
+            <Controls />
+          </div>
         </div>
 
         <div className="FeatureSide">
-          <Features />
+          <Features participantsList={participantsList} participantsVideoSDK={participants} />
+          <div className="ControlButtonsContainer --justifyContentRight">
+            <FeatureButtons />
+          </div>
         </div>
-      </div>
-      <div className="ControlSide">
-        <Controls />
-        <FeatureButtons />
       </div>
     </div>
   );

@@ -12,15 +12,15 @@
   align-items: center;
   justify-content: space-between;
 }
-.ValidateParticipantsButton{
+.ValidateParticipantsButton {
   border-radius: 0.5rem;
   color: white;
   font-weight: bold;
   padding: 1rem;
-  background-color: #00AA1C;
+  background-color: #00aa1c;
 }
 .FunctionalSide {
-  height: 75%;
+  height: 90%;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -30,7 +30,13 @@
   display: flex;
   flex-direction: column;
   margin-left: 2rem;
-  min-width: 35%;
+  min-width: 27.5%;
+}
+.CameraSideContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .CameraGrid {
   display: grid;
@@ -46,14 +52,25 @@
   overflow-y: auto;
   padding: 1.5rem;
 }
-.ControlSide {
+.ControlButtonsContainer {
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.--justifyContentRight {
+  justify-content: flex-end;
+}
+
+/* .ControlSide {
   width: 100%;
   height: 15%;
   flex-direction: row;
-  padding-left: 35%;
+  padding-left: 32.5%;
   padding-right: 0;
   padding-top: 1rem;
   align-items: center;
   justify-content: space-between;
   display: flex;
-}
+} */
