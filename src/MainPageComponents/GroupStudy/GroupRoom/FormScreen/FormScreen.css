@@ -1,5 +1,81 @@
+
+.FormScreen{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+   
+}
+.FormScreenForm{
+    border-radius: 1rem;
+    border: 2px solid #DADCE0;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 2rem;
+    overflow-y: auto;
+}
+.titleContainer{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+.formScreenInput{
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    border: 2px solid black;
+}
+
+.timelineInputElement{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.75rem;
+    color: gray;
+    font-weight: bold;
+}
+.timelineInputBar{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    border-radius: 0.5rem;
+    border: 2px solid #DADCE0;
+    padding: 0.5rem 1rem;
+    background-color: white;
+}
+.timelineSaveButton{
+    background-color: #1a73e8;
+    padding: 0.75rem 1rem;
+    color: white;
+    font-weight: bold;
+    border-radius: 0.5rem;
+}
+.--deleteButton{
+    background-color: #E73E33;
+}
 .StopContainer{
     display: flex;
     flex-direction: row;
     align-items: center;
+    border-radius: 0.5rem;
+    border: 2px solid black;
+    padding: 0.5rem 1rem;
+    background-color: white;
+    margin: 0.5rem 0;
+}
+.GridTimeline{
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.formScreenSubmitButton{
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    background-color: #44B16B;
+    display: flex;
+    flex-shrink: 0;
+    color: white;
+    font-size: 1rem;
+    margin-top: 1rem;
 }

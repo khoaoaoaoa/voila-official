@@ -4,20 +4,19 @@ import { onSnapshot, collection, doc } from "firebase/firestore";
 import { deleteDoc, addDoc, updateDoc } from "firebase/firestore";
 import { roomsColRef } from "../../../../Firebase/config";
 import "./FormScreen.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEraser, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
-const FormScreen = ({meetingId, joinWaitingScreen}) => {
+import { query, orderBy } from "firebase/firestore";
+const FormScreen = ({ meetingId, joinWaitingScreen }) => {
   const [timeline, setTimeline] = useState([]);
   const [roomName, setRoomName] = useState("");
   const [inputStop, setInputStop] = useState({
     time: "",
     content: "",
   });
-  const timelineSubColRef = collection(
-    roomsColRef,
-    meetingId,
-    "timeline"
-  );
-   
+  const timelineSubColRef = collection(roomsColRef, meetingId, "timeline");
+  const timelineQuery = query(timelineSubColRef, orderBy("time"));
   //Gui titile di
   const handleSubmit = async () => {
     try {
@@ -47,18 +46,18 @@ const FormScreen = ({meetingId, joinWaitingScreen}) => {
   };
 
   useEffect(() => {
-    onSnapshot(timelineSubColRef, (snapshot) => {
+    onSnapshot(timelineQuery, (snapshot) => {
       setTimeline(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
   }, []);
 
   return (
     <div className="FormScreen">
-      <form onSubmit={(e) => e.preventDefault()}>
+      <form onSubmit={(e) => e.preventDefault()} className="FormScreenForm">
         <div className="titleContainer">
           <h1>Title</h1>
           <input
-            required
+            className="formScreenInput"
             type="text"
             name="roomName"
             onChange={(e) => {
@@ -67,37 +66,56 @@ const FormScreen = ({meetingId, joinWaitingScreen}) => {
           />
         </div>
         <div className="timelineContainer">
-          <h1>Timeline</h1>
+          <h1 style={{ marginBottom: "0.5rem" }}>Timeline</h1>
           <div className="timelineInputBar">
-            <input
-              type="time"
-              onChange={(e) =>
-                setInputStop({ ...inputStop, time: e.target.value })
-              }
-            />
-            <input
-              type="text"
-              onChange={(e) =>
-                setInputStop({ ...inputStop, content: e.target.value })
-              }
-            />
-            <button onClick={() => handleSaveStop(inputStop)}>Save</button>
+            <div className="timelineInputElement">
+              <p>Mốc thời gian</p>
+              <input
+                className="formScreenInput"
+                type="time"
+                onChange={(e) =>
+                  setInputStop({ ...inputStop, time: e.target.value })
+                }
+              />
+            </div>
+            <div className="timelineInputElement" style={{ margin: "0 1rem" }}>
+              <p>Nội dung</p>
+              <input
+                className="formScreenInput"
+                type="text"
+                onChange={(e) =>
+                  setInputStop({ ...inputStop, content: e.target.value })
+                }
+              />
+            </div>
+            <button
+              className="timelineSaveButton"
+              onClick={() => handleSaveStop(inputStop)}>
+              <FontAwesomeIcon icon={faCheck} />
+            </button>
           </div>
           <div className="GridTimeline">
+          <h2>Kịch bản</h2>
             {timeline.map((stop) => (
               <>
                 <div className="StopContainer" key={stop.id}>
-                  <input type="time" value={stop?.time} disabled />
-                  <input type="text" value={stop?.content} disabled />
-                  <button onClick={() => handleDeleteStop(stop.id)}>
-                    delete
+                  <input type="time" value={stop?.time} disabled className="formScreenInput"/>
+                  <input
+                    type="text"
+                    value={stop?.content}
+                    disabled
+                    className="formScreenInput"
+                    style={{ margin: "0 1rem" }}
+                  />
+                  <button onClick={() => handleDeleteStop(stop.id)} className="timelineSaveButton --deleteButton">
+                    <FontAwesomeIcon icon={faEraser} />
                   </button>
                 </div>
               </>
             ))}
           </div>
         </div>
-        <button onClick={() => handleSubmit()}>Submit</button>
+        <button className="formScreenSubmitButton" onClick={() => handleSubmit()}>Submit</button>
       </form>
     </div>
   );

@@ -40,6 +40,7 @@ function GroupRoom() {
       await setDoc(doc(roomsColRef, id), {
         roomId: id,
         hostId: userDocRef?.data()?.uid,
+        isRoomStarted: false,
       });
 
       toast.success("Đăng ký thành công!");
