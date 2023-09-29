@@ -32,7 +32,7 @@ const Features = () => {
 
   return (
     <div className="FeaturesContainer" id="Features">
-      <div className="Features">
+      <div className="FeaturesLanding">
         <h1>Tính Năng</h1>
         <div className="FeaturesCarouselContainer">
           <Carousel

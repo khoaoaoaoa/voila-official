@@ -14,6 +14,7 @@
     flex-direction: column;
     padding: 1rem 2rem;
     overflow-y: auto;
+    width: 60%;
 }
 .titleContainer{
     display: flex;
@@ -24,8 +25,16 @@
     border-radius: 0.5rem;
     padding: 0.5rem;
     border: 2px solid black;
+    height: 100%;
+    width: 100%;
 }
-
+.react-time-picker__wrapper{
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    border: 2px solid black !important;
+    padding: 0.25rem !important;
+    flex-shrink: 0 ;
+}
 .timelineInputElement{
     display: flex;
     flex-direction: column;
@@ -37,7 +46,7 @@
 .timelineInputBar{
     display: flex;
     flex-direction: row;
-    align-items: flex-end;
+    justify-content: space-between;
     border-radius: 0.5rem;
     border: 2px solid #DADCE0;
     padding: 0.5rem 1rem;
@@ -49,6 +58,7 @@
     color: white;
     font-weight: bold;
     border-radius: 0.5rem;
+    width: 70px;
 }
 .--deleteButton{
     background-color: #E73E33;
@@ -62,6 +72,9 @@
     padding: 0.5rem 1rem;
     background-color: white;
     margin: 0.5rem 0;
+    width: 100%;
+    font-size: 0.75rem;
+    font-weight: bold;
 }
 .GridTimeline{
     margin-top: 1rem;

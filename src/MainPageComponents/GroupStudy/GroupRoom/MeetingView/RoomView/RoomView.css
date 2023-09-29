@@ -62,7 +62,13 @@
 .--justifyContentRight {
   justify-content: flex-end;
 }
-
+.timerContainer{
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
 /* .ControlSide {
   width: 100%;
   height: 15%;

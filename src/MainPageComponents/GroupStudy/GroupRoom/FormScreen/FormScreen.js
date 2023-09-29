@@ -8,6 +8,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEraser, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { query, orderBy } from "firebase/firestore";
+import TimePicker from "react-time-picker";
+import "react-time-picker/dist/TimePicker.css";
+import "react-clock/dist/Clock.css";
 const FormScreen = ({ meetingId, joinWaitingScreen }) => {
   const [timeline, setTimeline] = useState([]);
   const [roomName, setRoomName] = useState("");
@@ -70,15 +73,17 @@ const FormScreen = ({ meetingId, joinWaitingScreen }) => {
           <div className="timelineInputBar">
             <div className="timelineInputElement">
               <p>Mốc thời gian</p>
-              <input
-                className="formScreenInput"
-                type="time"
-                onChange={(e) =>
-                  setInputStop({ ...inputStop, time: e.target.value })
-                }
+              <TimePicker
+                format="HH:mm"
+                value={inputStop.time}
+                onChange={(value) => {
+                  setInputStop({ ...inputStop, time: value });
+                }}
               />
             </div>
-            <div className="timelineInputElement" style={{ margin: "0 1rem" }}>
+            <div
+              className="timelineInputElement"
+              style={{ margin: "0 1rem", flex: 1 }}>
               <p>Nội dung</p>
               <input
                 className="formScreenInput"
@@ -95,19 +100,28 @@ const FormScreen = ({ meetingId, joinWaitingScreen }) => {
             </button>
           </div>
           <div className="GridTimeline">
-          <h2>Kịch bản</h2>
+            <h2>Kịch bản</h2>
             {timeline.map((stop) => (
               <>
                 <div className="StopContainer" key={stop.id}>
-                  <input type="time" value={stop?.time} disabled className="formScreenInput"/>
+                  <TimePicker
+                    format="HH:mm"
+                    disabled
+                    value={stop?.time}
+                    onChange={(value) => {
+                      setInputStop({ ...inputStop, time: value });
+                    }}
+                  />
                   <input
                     type="text"
+                    style={{ margin: "0 1rem", flex: 1 }}
                     value={stop?.content}
                     disabled
                     className="formScreenInput"
-                    style={{ margin: "0 1rem" }}
                   />
-                  <button onClick={() => handleDeleteStop(stop.id)} className="timelineSaveButton --deleteButton">
+                  <button
+                    onClick={() => handleDeleteStop(stop.id)}
+                    className="timelineSaveButton --deleteButton">
                     <FontAwesomeIcon icon={faEraser} />
                   </button>
                 </div>
@@ -115,7 +129,11 @@ const FormScreen = ({ meetingId, joinWaitingScreen }) => {
             ))}
           </div>
         </div>
-        <button className="formScreenSubmitButton" onClick={() => handleSubmit()}>Submit</button>
+        <button
+          className="formScreenSubmitButton"
+          onClick={() => handleSubmit()}>
+          Submit
+        </button>
       </form>
     </div>
   );

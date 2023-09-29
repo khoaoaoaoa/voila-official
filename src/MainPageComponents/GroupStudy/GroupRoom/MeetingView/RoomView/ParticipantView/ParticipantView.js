@@ -30,6 +30,14 @@ function ParticipantView(props) {
     }
   }, [webcamStream, webcamOn]);
 
+  const checkingRole = () => {
+    if (props.timeline[props.stopIndex]?.teacherName === displayName) {
+      return <div className="role --teacher">Diễn giả</div>;
+    } else {
+      return <div className="role --student">Người nghe</div>;
+    }
+  };
+
   //MicStream
   useEffect(() => {
     if (micRef.current) {
@@ -45,8 +53,10 @@ function ParticipantView(props) {
   }, [micStream, micOn]);
 
   return (
-    <div className="ParticipantView GridElement">
+    <div
+      className={pinState.cam ? "ParticipantView --pinned" : "ParticipantView"}>
       <audio ref={micRef} autoPlay playsInline muted={isLocal} />
+      {props?.isRoomStarted && <>{checkingRole()}</>}
       <div className="indicator">
         {!micOn && (
           <div className="micCamIndicator">

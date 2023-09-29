@@ -16,7 +16,7 @@ const ScreenShareView = (props) => {
     unpin,
     pinState,
     isLocal,
-    displayName
+    displayName,
   } = useParticipant(props.participantId);
 
   //screenShareStream
@@ -49,7 +49,10 @@ const ScreenShareView = (props) => {
     <>
       {" "}
       {screenShareOn && (
-        <div className="ScreenShareView GridElement">
+        <div
+          className={
+            pinState.share ? "ScreenShareView --pinned" : "ScreenShareView"
+          }>
           <audio
             ref={screenShareAudioRef}
             autoPlay
@@ -58,7 +61,7 @@ const ScreenShareView = (props) => {
           />
           <p className="displayName">{isLocal ? "You" : displayName}</p>
           <button
-          className="pinButton"
+            className="pinButton"
             onClick={() => {
               if (pinState.share === true) {
                 unpin("SHARE");
@@ -66,7 +69,7 @@ const ScreenShareView = (props) => {
                 pin("SHARE");
               }
             }}>
-           <FontAwesomeIcon icon={faThumbtack} />
+            <FontAwesomeIcon icon={faThumbtack} />
           </button>
           <ReactPlayer
             //

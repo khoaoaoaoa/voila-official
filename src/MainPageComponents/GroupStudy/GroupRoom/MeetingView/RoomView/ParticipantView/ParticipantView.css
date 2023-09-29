@@ -9,6 +9,10 @@
   background-color: #8fcff2;
   border-radius: 1rem;
 }
+.--pinned{
+  grid-row: span 2;
+  grid-column: span 2;
+}
 .CameraPlayer {
   display: flex;
 }
@@ -57,4 +61,21 @@
   color: white;
   font-weight: bold;
   z-index: 500;
+}
+.role{
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  padding: 0.5rem 1rem;
+  border-radius: 3rem;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  z-index: 500;
+}
+.--teacher{
+  background-color: #DF6962;
+}
+.--student{
+  background-color: #0EBC2E;
 }
