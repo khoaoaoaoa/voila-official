@@ -74,7 +74,7 @@ const RoomView = ({ participants, meetingId }) => {
             {room?.isRoomStarted && (
               <div className="timerContainer">
                 <p>
-                  {time.hours} : {time.minutes} : {time.seconds}
+                  {time.hours} : {time.minutes}
                 </p>
               </div>
             )}
