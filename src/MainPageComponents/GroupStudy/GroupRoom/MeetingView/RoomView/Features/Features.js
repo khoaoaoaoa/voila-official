@@ -16,7 +16,7 @@ const Features = ({
   return (
     <>
       <div className="Features">
-      
+
         {/* <ParticipantsList participantsList={participantsList}/> */}
         {timeline && (
           <ScriptBox
