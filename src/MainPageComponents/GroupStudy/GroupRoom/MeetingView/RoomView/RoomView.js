@@ -4,16 +4,18 @@ import Controls from "./Controls/Controls";
 import ScreenShareView from "./ScreenShareView/ScreenShareView";
 import { updateDoc } from "firebase/firestore";
 import { onSnapshot, collection, doc } from "firebase/firestore";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
-import Features from "./Features/Features";
+import PortalContainer from "../../../../../Components/PortalContainer/PortalContainer";
+import PromptPortal from "./Features/ScriptBox/PromptPortal/PromptPortal";
 import FeatureButtons from "./FeatureButtons/FeatureButtons";
 import { roomsColRef } from "../../../../../Firebase/config";
 import "./RoomView.css";
 import { query, orderBy } from "firebase/firestore";
 import { useAuthContext } from "../../../../../Context/AuthContext";
-
+import ScriptBox from "./Features/ScriptBox/ScriptBox";
+import { toast } from "react-toastify";
 const RoomView = ({ participants, meetingId }) => {
+  const [timeStop, setTimeStop] = useState(0);
+  const [isPromptPortalOpen, setIsPromptPortalOpen] = useState(false);
   const [room, setRoom] = useState(null);
   const [time, setTime] = useState({
     hours: "",
@@ -38,6 +40,77 @@ const RoomView = ({ participants, meetingId }) => {
       startedTime: new Date().toString(),
     });
   };
+
+  // ---time logic ---
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!room?.startedTime) return;
+      const time = Date.now() - Date.parse(room?.startedTime);
+      const hours = Math.floor((time / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((time / 1000 / 60) % 60);
+      const seconds = Math.floor((time / 1000) % 60);
+
+      if (hours < 10) {
+        setTime((prev) => ({ ...prev, hours: `0${hours}` }));
+      } else {
+        setTime((prev) => ({ ...prev, hours: `${hours}` }));
+      }
+      if (minutes < 10) {
+        setTime((prev) => ({ ...prev, minutes: `0${minutes}` }));
+      } else {
+        setTime((prev) => ({ ...prev, minutes: `${minutes}` }));
+      }
+      if (seconds < 10) {
+        setTime((prev) => ({ ...prev, seconds: `0${seconds}` }));
+      } else {
+        setTime((prev) => ({ ...prev, seconds: `${seconds}` }));
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [room?.startedTime]);
+
+  useEffect(() => {
+    const miliseconds = time.minutes * 60 * 1000 + time.seconds * 1000;
+
+    if (
+      miliseconds > timeStop &&
+      timeStop != 0 &&
+      stopIndex + 1 <= timeline.length - 1
+    ) {
+      const nextIndex = stopIndex + 1;
+      setStopIndex(nextIndex);
+      if (nextIndex + 1 <= timeline.length - 1) {
+        const hours = timeline[nextIndex + 1].time.substring(0, 2);
+        const minutes = timeline[nextIndex + 1].time.substring(3, 5);
+        setTimeStop(hours * 60 * 60 * 1000 + minutes * 60 * 1000);
+      }
+      setIsPromptPortalOpen(true);
+      toast(
+        `🚀 ${timeline[nextIndex].time} - ${timeline[nextIndex].content} - ${timeline[nextIndex].teacherName}`,
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
+      console.log("nextIndex: " + nextIndex);
+    } else if (miliseconds > timeStop && timeStop === 0) {
+      setStopIndex(0);
+      const hours = timeline[1].time.substring(0, 2);
+      const minutes = timeline[1].time.substring(3, 5);
+      setTimeStop(hours * 60 * 60 * 1000 + minutes * 60 * 1000);
+    }
+    console.log(stopIndex);
+    console.log(miliseconds);
+    console.log(timeStop);
+  }, [time]);
+
+  //---time logic ---
 
   useEffect(() => {
     onSnapshot(doc(roomsColRef, meetingId), (snapshot) => {
@@ -110,16 +183,22 @@ const RoomView = ({ participants, meetingId }) => {
             </div>
 
             <div className="FeatureSide">
-              <Features
-                participantsList={participantsList}
-                participantsVideoSDK={participants}
-                timeline={timeline}
-                room={room}
-                setTime={setTime}
-                time={time}
-                stopIndex={stopIndex}
-                setStopIndex={setStopIndex}
-              />
+              {isPromptPortalOpen &&
+                timeline[stopIndex].teacherId === userDocRef.data().uid && (
+                  <PortalContainer
+                    className="PromptPortalContainer"
+                    onClose={() => setIsPromptPortalOpen(false)}>
+                    <PromptPortal teacherInfo={timeline[stopIndex]} />
+                  </PortalContainer>
+                )}
+              {timeline && (
+                <ScriptBox
+                  timeline={timeline}
+                  participantsList={participantsList}
+                  room={room}
+                  stopIndex={stopIndex}
+                />
+              )}
               <div className="ControlButtonsContainer --justifyContentRight">
                 <FeatureButtons />
               </div>

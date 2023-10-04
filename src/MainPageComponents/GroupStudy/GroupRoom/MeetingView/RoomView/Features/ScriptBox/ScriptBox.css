@@ -1,4 +1,4 @@
-.DisplayTimeline {
+.FeatureBackground{
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -8,6 +8,7 @@
   background-color: white;
   border-radius: 1rem;
   overflow-y: auto;
+  border: 2px solid #92979B;
 }
 .DisplayStopContainer {
   margin: 0.5rem 0;

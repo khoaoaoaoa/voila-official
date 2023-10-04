@@ -10,45 +10,12 @@ import { useParams } from "react-router-dom";
 import { doc, collection } from "firebase/firestore";
 import { toast } from "react-toastify";
 
-const ScriptBox = ({
-  timeline,
-  participantsList,
-  room,
-  setTime,
-  time,
-  stopIndex,
-  setStopIndex,
-}) => {
+
+const ScriptBox = ({ timeline, participantsList, room, stopIndex }) => {
   const [selectOptions, setSelectOptions] = useState([]);
-  const [timeStop, setTimeStop] = useState(0);
   let { meetingId } = useParams();
   const { userDocRef } = useAuthContext();
-  useEffect(() => {
-    const miliseconds = time.minutes * 60 * 1000 + time.seconds * 1000;
 
-    if (
-      miliseconds > timeStop &&
-      timeStop != 0 &&
-      stopIndex + 1 <= timeline.length - 1
-    ) {
-      const nextIndex = stopIndex + 1;
-      setStopIndex(nextIndex);
-      if (nextIndex + 1 <= timeline.length - 1) {
-        const hours = timeline[nextIndex + 1].time.substring(0, 2);
-        const minutes = timeline[nextIndex + 1].time.substring(3, 5);
-        setTimeStop(hours * 60 * 60 * 1000 + minutes * 60 * 1000);
-      }
-      console.log("nextIndex: " + nextIndex);
-    } else if (miliseconds > timeStop && timeStop === 0) {
-      setStopIndex(0);
-      const hours = timeline[1].time.substring(0, 2);
-      const minutes = timeline[1].time.substring(3, 5);
-      setTimeStop(hours * 60 * 60 * 1000 + minutes * 60 * 1000);
-    }
-    console.log(stopIndex);
-    console.log(miliseconds);
-    console.log(timeStop);
-  }, [time]);
   useEffect(() => {
     const options = [];
     participantsList.forEach((participant) => {
@@ -59,35 +26,6 @@ const ScriptBox = ({
     });
     setSelectOptions([...options]);
   }, [participantsList]);
-  //--time logic--
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!room.startedTime) return;
-      const time = Date.now() - Date.parse(room?.startedTime);
-      const hours = Math.floor((time / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((time / 1000 / 60) % 60);
-      const seconds = Math.floor((time / 1000) % 60);
-
-      if (hours < 10) {
-        setTime((prev) => ({ ...prev, hours: `0${hours}` }));
-      } else {
-        setTime((prev) => ({ ...prev, hours: `${hours}` }));
-      }
-      if (minutes < 10) {
-        setTime((prev) => ({ ...prev, minutes: `0${minutes}` }));
-      } else {
-        setTime((prev) => ({ ...prev, minutes: `${minutes}` }));
-      }
-      if (seconds < 10) {
-        setTime((prev) => ({ ...prev, seconds: `0${seconds}` }));
-      } else {
-        setTime((prev) => ({ ...prev, seconds: `${seconds}` }));
-      }
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [room?.startedTime]);
-  //--time logic--
 
   const updateRoleTeacher = async (data) => {
     const stopRef = doc(roomsColRef, meetingId, "timeline", data.id);
@@ -122,7 +60,7 @@ const ScriptBox = ({
   };
   return (
     <>
-      <div className="DisplayTimeline">
+      <div className="FeatureBackground">
         {userDocRef.data().uid === room?.hostId && !room?.isRoomStarted && (
           <>
             <div className="DisplayTimelineHeader">
