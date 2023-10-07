@@ -13,7 +13,7 @@ import { query, orderBy } from "firebase/firestore";
 import { useAuthContext } from "../../../../../Context/AuthContext";
 import ScriptBox from "./Features/ScriptBox/ScriptBox";
 import { toast } from "react-toastify";
-const RoomView = ({ participants, meetingId, pinStatus }) => {
+const RoomView = ({ participants, meetingId }) => {
   const [timeStop, setTimeStop] = useState(0);
   const [isPromptPortalOpen, setIsPromptPortalOpen] = useState(false);
   const [room, setRoom] = useState(null);
@@ -161,7 +161,6 @@ const RoomView = ({ participants, meetingId, pinStatus }) => {
                       stopIndex={stopIndex}
                       participantId={participantId}
                       key={participantId}
-                      pinStatus={pinStatus}
                     />
                   </>
                 ))}
@@ -174,7 +173,6 @@ const RoomView = ({ participants, meetingId, pinStatus }) => {
                       participantId={participantId}
                       key={participantId}
                       isRoomStarted={room?.isRoomStarted}
-                      pinStatus={pinStatus}
                     />
                   </>
                 ))}

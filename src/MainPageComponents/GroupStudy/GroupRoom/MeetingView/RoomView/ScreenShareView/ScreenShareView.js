@@ -45,24 +45,14 @@ const ScreenShareView = (props) => {
     }
   }, [screenShareAudioStream, screenShareOn]);
 
-  const pinFunction = () => {
-    if (
-      props.pinStatus?.participantId === props.participantId &&
-      props.pinStatus?.state?.share
-    ) {
-      return "ScreenShareView --pinnedFirst";
-    } else if (
-      pinState.share &&
-      props.pinStatus?.participantId !== props.participantId
-    ) {
-      return "ScreenShareView --pinned";
-    } else return "ScreenShareView";
-  };
   return (
     <>
       {" "}
       {screenShareOn && (
-        <div className={pinFunction()}>
+        <div
+          className={
+            pinState.share ? "ScreenShareView --pinned" : "ScreenShareView"
+          }>
           <audio
             ref={screenShareAudioRef}
             autoPlay
