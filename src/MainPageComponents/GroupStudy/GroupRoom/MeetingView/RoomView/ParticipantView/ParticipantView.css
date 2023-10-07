@@ -9,9 +9,17 @@
   background-color: #8fcff2;
   border-radius: 1rem;
 }
+.--pinnedFirst{
+  grid-column: 1 / span 2;
+  grid-row: 1 / span 2;
+}
 .--pinned{
-  grid-row: span 2;
   grid-column: span 2;
+  grid-row: span 2;
+}
+.--pinnedSecond{
+  grid-column: 1 / span 2;
+  grid-row: 3 / span 2;
 }
 .CameraPlayer {
   display: flex;

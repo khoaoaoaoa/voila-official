@@ -38,6 +38,26 @@ function ParticipantView(props) {
     }
   };
 
+  const pinFunction = () => {
+    if (
+      props.pinStatus?.participantId === props.participantId &&
+      props.pinStatus?.state?.cam &&
+      props.pinStatus?.state?.share
+    ) {
+      return "ParticipantView --pinnedSecond";
+    } else if (
+      props.pinStatus?.participantId === props.participantId &&
+      props.pinStatus?.state?.cam &&
+      !props.pinStatus?.state?.share
+    ) {
+      return "ParticipantView --pinnedFirst";
+    } else if (
+      pinState.cam &&
+      props.pinStatus?.participantId !== props.participantId
+    ) {
+      return "ParticipantView --pinned";
+    } else return "ParticipantView";
+  };
   //MicStream
   useEffect(() => {
     if (micRef.current) {
@@ -53,8 +73,7 @@ function ParticipantView(props) {
   }, [micStream, micOn]);
 
   return (
-    <div
-      className={pinState.cam ? "ParticipantView --pinned" : "ParticipantView"}>
+    <div className={pinFunction()}>
       <audio ref={micRef} autoPlay playsInline muted={isLocal} />
       {props?.isRoomStarted && <>{checkingRole()}</>}
       <div className="indicator">

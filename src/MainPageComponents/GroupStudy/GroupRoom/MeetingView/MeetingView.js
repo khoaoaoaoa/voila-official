@@ -11,6 +11,7 @@ import { useOutletContext } from "react-router-dom";
 import { useParams } from "react-router-dom";
 function MeetingView() {
   const [joined, setJoined] = useState("");
+  const [pinStatus, setPinStatus] = useState({});
   const { meetingId: meetingParamsId } = useParams();
   const [participantsList, setParticipantsList] = useState([]);
   const { userDocRef } = useAuthContext();
@@ -31,6 +32,13 @@ function MeetingView() {
       await deleteDoc(
         doc(roomsColRef, meetingId, "participants", userDocRef.data().uid)
       );
+    },
+    onPinStateChanged: ({ participantId, state, pinnedBy }) => {
+      setPinStatus({
+        participantId, // id of participant who were pinned
+        state, // { cam: true, share: true }
+        pinnedBy, // id of participant who pinned that participant
+      });
     },
   });
 
@@ -67,9 +75,10 @@ function MeetingView() {
     } else if (joined && joined == "JOINING") {
       return <p>Joining</p>;
     } else if (joined && joined == "JOINED") {
-      return <RoomView participants={participants} meetingId={meetingId} />;
+      return <RoomView participants={participants} meetingId={meetingId} pinStatus={pinStatus}/>;
     }
   };
+
   return <>{phaseDisplay()}</>;
 }
 
