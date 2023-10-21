@@ -56,7 +56,7 @@ function ParticipantView(props) {
     <div
       className={pinState.cam ? "ParticipantView --pinned" : "ParticipantView"}>
       <audio ref={micRef} autoPlay playsInline muted={isLocal} />
-      {props?.isRoomStarted && <>{checkingRole()}</>}
+      { ((props.room?.roomStatus === "active") || (props.room?.roomStatus === "session-prepare"))  && <>{checkingRole()}</>}
       <div className="indicator">
         {!micOn && (
           <div className="micCamIndicator">

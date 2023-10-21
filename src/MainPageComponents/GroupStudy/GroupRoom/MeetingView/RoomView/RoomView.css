@@ -12,7 +12,12 @@
   align-items: center;
   justify-content: space-between;
 }
+.RoomViewHeaderButtons {
+  display: flex;
+  flex-direction: row;
+}
 .ValidateParticipantsButton {
+  margin-left: 0.5rem;
   border-radius: 0.5rem;
   color: white;
   font-weight: bold;
@@ -62,11 +67,17 @@
 .--justifyContentRight {
   justify-content: flex-end;
 }
+.sessionButton {
+  margin-left: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
 .timerContainer {
   background-color: black;
   color: white;
   font-weight: bold;
   padding: 0.5rem;
+  margin-left: 0.5rem;
   border-radius: 0.5rem;
 }
 .PromptPortalContainer {

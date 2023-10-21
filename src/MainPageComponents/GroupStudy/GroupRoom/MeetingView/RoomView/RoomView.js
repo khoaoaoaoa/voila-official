@@ -16,13 +16,16 @@ import { toast } from "react-toastify";
 const RoomView = ({ participants, meetingId }) => {
   const [timeStop, setTimeStop] = useState(0);
   const [isPromptPortalOpen, setIsPromptPortalOpen] = useState(false);
+  const [startedTime, setStartedTime] = useState(null);
   const [room, setRoom] = useState(null);
+  const [roomStatus, setRoomStatus] = useState("inactive");
   const [time, setTime] = useState({
     hours: "",
     minutes: "",
     seconds: "",
   });
   const [stopIndex, setStopIndex] = useState(0);
+  const [sessionTime, setSessionTime] = useState(null);
   const [timeline, setTimeline] = useState([]);
   const [participantsList, setParticipantsList] = useState([]);
   const timelineSubColRef = collection(roomsColRef, `${meetingId}`, "timeline");
@@ -34,17 +37,35 @@ const RoomView = ({ participants, meetingId }) => {
   );
   const { userDocRef } = useAuthContext();
 
-  const updateIsRoomStarted = async (state) => {
-    await updateDoc(doc(roomsColRef, meetingId), {
-      isRoomStarted: state,
-      startedTime: new Date().toString(),
-    });
+  const updateRoomStatus = async (data) => {
+    await updateDoc(doc(roomsColRef, meetingId), data);
   };
+  useEffect(() => {
+    updateRoomStatus({ roomStatus: roomStatus, startedTime: startedTime });
+  }, [roomStatus, startedTime]);
+
+  useEffect(() => {
+    onSnapshot(doc(roomsColRef, meetingId), (snapshot) => {
+      setRoom(snapshot.data());
+    });
+    onSnapshot(timelineQuery, (snapshot) => {
+      setTimeline(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    });
+    onSnapshot(participantsSubColRef, (snapshot) => {
+      setParticipantsList(
+        snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      );
+    });
+  }, []);
 
   // ---time logic ---
   useEffect(() => {
     const interval = setInterval(() => {
-      if (!room?.startedTime) return;
+      if (
+        room?.roomStatus === "session-prepare" ||
+        room?.roomStatus === "inactive"
+      )
+        return;
       const time = Date.now() - Date.parse(room?.startedTime);
       const hours = Math.floor((time / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((time / 1000 / 60) % 60);
@@ -67,11 +88,10 @@ const RoomView = ({ participants, meetingId }) => {
       }
     }, 1000);
     return () => clearInterval(interval);
-  }, [room?.startedTime]);
+  }, [room?.roomStatus]);
 
   useEffect(() => {
     const miliseconds = time.minutes * 60 * 1000 + time.seconds * 1000;
-
     if (
       miliseconds > timeStop &&
       timeStop != 0 &&
@@ -84,6 +104,7 @@ const RoomView = ({ participants, meetingId }) => {
         const minutes = timeline[nextIndex + 1].time.substring(3, 5);
         setTimeStop(hours * 60 * 60 * 1000 + minutes * 60 * 1000);
       }
+      setRoomStatus("session-prepare");
       setIsPromptPortalOpen(true);
       toast(
         `🚀 ${timeline[nextIndex].time} - ${timeline[nextIndex].content} - ${timeline[nextIndex].teacherName}`,
@@ -105,52 +126,70 @@ const RoomView = ({ participants, meetingId }) => {
       const minutes = timeline[1].time.substring(3, 5);
       setTimeStop(hours * 60 * 60 * 1000 + minutes * 60 * 1000);
     }
+    console.log(time);
     console.log(stopIndex);
     console.log(miliseconds);
     console.log(timeStop);
+    console.log("Status:" + room?.roomStatus);
   }, [time]);
 
   //---time logic ---
-
+  // --session-prepare-time-logic
   useEffect(() => {
-    onSnapshot(doc(roomsColRef, meetingId), (snapshot) => {
-      setRoom(snapshot.data());
-      console.log(snapshot.data());
-      console.log(room);
-    });
-    onSnapshot(timelineQuery, (snapshot) => {
-      setTimeline(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    });
-    onSnapshot(participantsSubColRef, (snapshot) => {
-      setParticipantsList(
-        snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-      );
-    });
-  }, []);
-
+    const date = Date.now();
+    const interval = setInterval(() => {
+      if (room?.roomStatus !== "session-prepare") return;
+      //time format is ms
+      const time = Date.now() - date;
+      setSessionTime(time);
+    }, 1000);
+    if (room?.roomStatus === "active") {
+      clearInterval(interval);
+    }
+  }, [room?.roomStatus]);
+  // --session-prepare-time-logic
+  console.log(startedTime)
   // console.log(timeline);
   // console.log(participantsList);
-  console.log(time);
   return (
     <>
-      {room && timeline && participantsList && (
+      {room?.roomStatus && timeline && participantsList && (
         <div className="RoomView">
           <div className="RoomViewHeader">
             <h1>{room?.roomName}</h1>
-            {!room?.isRoomStarted && userDocRef.data().uid === room?.hostId && (
-              <button
-                className="ValidateParticipantsButton"
-                onClick={() => updateIsRoomStarted(true)}>
-                Bắt đầu buổi học!
-              </button>
-            )}
-            {room?.isRoomStarted && (
-              <div className="timerContainer">
-                <p>
-                  {time.hours} : {time.minutes}
-                </p>
-              </div>
-            )}
+            <div className="RoomViewHeaderButtons">
+              {room?.roomStatus === "inactive" &&
+                userDocRef.data().uid === room?.hostId && (
+                  <button
+                    className="ValidateParticipantsButton"
+                    onClick={() => {
+                      setRoomStatus("active");
+                      setStartedTime(new Date().toString());
+                    }}>
+                    Bắt đầu buổi học!
+                  </button>
+                )}
+              {room?.roomStatus === "session-prepare" && (
+                <button
+                  className="sessionButton"
+                  onClick={() => {
+                    setRoomStatus("active");
+                    setStartedTime(
+                      new Date(Date.parse(room?.startedTime) + sessionTime).toString()
+                    );
+                  }}>
+                  Clickhere
+                </button>
+              )}
+              {(room?.roomStatus === "active" ||
+                room?.roomStatus === "session-prepare") && (
+                <div className="timerContainer">
+                  <p>
+                    {time.hours} : {time.minutes}
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
           <div className="FunctionalSide">
             <div className="CameraSideContainer">
@@ -172,7 +211,7 @@ const RoomView = ({ participants, meetingId }) => {
                       stopIndex={stopIndex}
                       participantId={participantId}
                       key={participantId}
-                      isRoomStarted={room?.isRoomStarted}
+                      room={room}
                     />
                   </>
                 ))}

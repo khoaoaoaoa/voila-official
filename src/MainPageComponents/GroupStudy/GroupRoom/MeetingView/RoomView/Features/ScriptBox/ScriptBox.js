@@ -10,7 +10,6 @@ import { useParams } from "react-router-dom";
 import { doc, collection } from "firebase/firestore";
 import { toast } from "react-toastify";
 
-
 const ScriptBox = ({ timeline, participantsList, room, stopIndex }) => {
   const [selectOptions, setSelectOptions] = useState([]);
   let { meetingId } = useParams();
@@ -61,43 +60,46 @@ const ScriptBox = ({ timeline, participantsList, room, stopIndex }) => {
   return (
     <>
       <div className="FeatureBackground">
-        {userDocRef.data().uid === room?.hostId && !room?.isRoomStarted && (
-          <>
-            <div className="DisplayTimelineHeader">
-              <h2>Luân phiên vai trò</h2>
-            </div>
-            <div className="DisplayStopContainer">
-              <h3>Timer</h3>
-              <Select
-                className="timelineSelect"
-                defaultValue={null}
-                onChange={(newValue) => updateRoleTimer({ ...newValue })}
-                options={selectOptions}
-              />
-            </div>
-            <div className="DisplayTimelineHeader">
-              <h3>Chọn vai trò "giáo viên"</h3>
-            </div>
-            {timeline.map((stop) => (
-              <>
-                <div className="DisplayStopContainer" key={stop.id}>
-                  <p className="timelineData">
-                    {stop?.time} - {stop.content}
-                  </p>
-                  <Select
-                    className="timelineSelect"
-                    defaultValue={null}
-                    onChange={(newValue) =>
-                      updateRoleTeacher({ ...newValue, id: stop.id })
-                    }
-                    options={selectOptions}
-                  />
-                </div>
-              </>
-            ))}
-          </>
-        )}
-        {room?.isRoomStarted && (
+        {userDocRef.data().uid === room?.hostId &&
+          room?.roomStatus === "inactive" && (
+            <>
+              <div className="DisplayTimelineHeader">
+                <h2>Luân phiên vai trò</h2>
+              </div>
+              <div className="DisplayStopContainer">
+                <h3>Timer</h3>
+                <Select
+                  className="timelineSelect"
+                  defaultValue={null}
+                  onChange={(newValue) => updateRoleTimer({ ...newValue })}
+                  options={selectOptions}
+                />
+              </div>
+              <div className="DisplayTimelineHeader">
+                <h3>Chọn vai trò "giáo viên"</h3>
+              </div>
+              {timeline.map((stop) => (
+                <>
+                  <div className="DisplayStopContainer" key={stop.id}>
+                    <p className="timelineData">
+                      {stop?.time} - {stop.content}
+                    </p>
+                    <Select
+                      className="timelineSelect"
+                      defaultValue={null}
+                      onChange={(newValue) =>
+                        updateRoleTeacher({ ...newValue, id: stop.id })
+                      }
+                      options={selectOptions}
+                    />
+                  </div>
+                </>
+              ))}
+            </>
+          )}
+
+        {((room?.roomStatus === "active") ||
+          (room?.roomStatus === "session-prepare")) && (
           <>
             <div className="DisplayTimelineHeader">
               <h2>Kế hoạch</h2>
