@@ -3,7 +3,9 @@ import GroupRoom from "./GroupRoom/GroupRoom";
 import PersonalRoom from "./PersonalRoom/PersonalRoom";
 import SelectRoom from "./SelectRoom/SelectRoom";
 import { Outlet, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 const GroupStudy = () => {
+  const { meetingId: meetingParamsId } = useParams();
   const [roomType, setRoomType] = useState(null);
   const navigate = useNavigate();
 
@@ -14,6 +16,11 @@ const GroupStudy = () => {
       navigate("groupRoom");
     }
   };
+  useEffect(() => {
+    if(meetingParamsId){
+      setRoomType("meetingParamsId");
+    }
+  }, [meetingParamsId])
   useEffect(() => {
     selectRoomFunc();
   }, [roomType]);

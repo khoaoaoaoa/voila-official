@@ -3,11 +3,19 @@ import "./ParticipantsList.css";
 import { useAuthContext } from "../../../../../../../Context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-const ParticipantsList = ({ participantsList, participantsVideoSDK }) => {
+const ParticipantsList = ({ participantsList }) => {
   const { userDocRef } = useAuthContext();
   return (
     <>
       <div className="ParticipantsList">
+        <h3
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}>
+          Participants List
+        </h3>
         {participantsList.map((participant) => {
           return (
             <>

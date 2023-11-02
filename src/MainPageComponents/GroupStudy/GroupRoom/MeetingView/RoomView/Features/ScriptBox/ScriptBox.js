@@ -64,10 +64,10 @@ const ScriptBox = ({ timeline, participantsList, room, stopIndex }) => {
           room?.roomStatus === "inactive" && (
             <>
               <div className="DisplayTimelineHeader">
-                <h2>Luân phiên vai trò</h2>
+                <h3>Luân phiên vai trò</h3>
               </div>
               <div className="DisplayStopContainer">
-                <h3>Timer</h3>
+                <h4>Timer</h4>
                 <Select
                   className="timelineSelect"
                   defaultValue={null}
@@ -76,7 +76,7 @@ const ScriptBox = ({ timeline, participantsList, room, stopIndex }) => {
                 />
               </div>
               <div className="DisplayTimelineHeader">
-                <h3>Chọn vai trò "giáo viên"</h3>
+                <h4>Chọn vai trò "giáo viên"</h4>
               </div>
               {timeline.map((stop) => (
                 <>
@@ -102,7 +102,7 @@ const ScriptBox = ({ timeline, participantsList, room, stopIndex }) => {
           (room?.roomStatus === "session-prepare")) && (
           <>
             <div className="DisplayTimelineHeader">
-              <h2>Kế hoạch</h2>
+              <h3>Kế hoạch</h3>
             </div>
             <div className="DisplayParticipantTimeline">
               {timeline.map((stop) => (

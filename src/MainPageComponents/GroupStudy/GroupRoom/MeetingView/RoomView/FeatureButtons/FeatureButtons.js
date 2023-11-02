@@ -7,17 +7,18 @@ import {
   faBookOpenReader,
   faAddressBook,
 } from "@fortawesome/free-solid-svg-icons";
-const FeatureButtons = () => {
+const FeatureButtons = ({setFeatureSelection}) => {
+  
   return (
     <>
       <div className="FeatureButtons">
-        <button>
+        <button onClick={()=>{setFeatureSelection("ChatBox")}}>
           <FontAwesomeIcon icon={faComments} />
         </button>
-        <button>
+        <button onClick={()=>{setFeatureSelection("ScriptBox")}}>
           <FontAwesomeIcon icon={faScroll} />
         </button>
-        <button>
+        <button onClick={()=>{setFeatureSelection("ParticipantsList")}}>
           <FontAwesomeIcon icon={faAddressBook} />
         </button>
       </div>

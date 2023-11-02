@@ -11,7 +11,9 @@ import { roomsColRef } from "../../../../../Firebase/config";
 import "./RoomView.css";
 import { query, orderBy } from "firebase/firestore";
 import { useAuthContext } from "../../../../../Context/AuthContext";
+import ParticipantsList from "./Features/ParticipantsList/ParticipantsList";
 import ScriptBox from "./Features/ScriptBox/ScriptBox";
+import ChatBox from "./Features/ChatBox/ChatBox";
 import { toast } from "react-toastify";
 const RoomView = ({ participants, meetingId }) => {
   const [timeStop, setTimeStop] = useState(0);
@@ -28,6 +30,8 @@ const RoomView = ({ participants, meetingId }) => {
   const [sessionTime, setSessionTime] = useState(null);
   const [timeline, setTimeline] = useState([]);
   const [participantsList, setParticipantsList] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const [featureSelection, setFeatureSelection] = useState("ScriptBox");
   const timelineSubColRef = collection(roomsColRef, `${meetingId}`, "timeline");
   const timelineQuery = query(timelineSubColRef, orderBy("time"));
   const participantsSubColRef = collection(
@@ -35,6 +39,7 @@ const RoomView = ({ participants, meetingId }) => {
     `${meetingId}`,
     "participants"
   );
+  const messagesSubColRef = collection(roomsColRef, `${meetingId}`, "messages");
   const { userDocRef } = useAuthContext();
 
   const updateRoomStatus = async (data) => {
@@ -55,6 +60,9 @@ const RoomView = ({ participants, meetingId }) => {
       setParticipantsList(
         snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
       );
+    });
+    onSnapshot(messagesSubColRef, (snapshot) => {
+      setMessages(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
   }, []);
 
@@ -148,9 +156,28 @@ const RoomView = ({ participants, meetingId }) => {
     }
   }, [room?.roomStatus]);
   // --session-prepare-time-logic
-  console.log(startedTime)
+  console.log(startedTime);
   // console.log(timeline);
   // console.log(participantsList);
+
+  //---FeatureSelection
+  const featureSelect = () => {
+    if (featureSelection === "ChatBox") {
+      return <ChatBox meetingId={meetingId} messages={messages} />;
+    } else if (featureSelection === "ScriptBox" && timeline) {
+      return (
+        <ScriptBox
+          timeline={timeline}
+          participantsList={participantsList}
+          room={room}
+          stopIndex={stopIndex}
+        />
+      );
+    } else if (featureSelection === "ParticipantsList" && participantsList) {
+      return <ParticipantsList participantsList={participantsList} />;
+    }
+  };
+  //---FeatureSelection
   return (
     <>
       {room?.roomStatus && timeline && participantsList && (
@@ -169,18 +196,21 @@ const RoomView = ({ participants, meetingId }) => {
                     Bắt đầu buổi học!
                   </button>
                 )}
-              {room?.roomStatus === "session-prepare" && (
-                <button
-                  className="sessionButton"
-                  onClick={() => {
-                    setRoomStatus("active");
-                    setStartedTime(
-                      new Date(Date.parse(room?.startedTime) + sessionTime).toString()
-                    );
-                  }}>
-                  Clickhere
-                </button>
-              )}
+              {room?.roomStatus === "session-prepare" &&
+                timeline[stopIndex]?.teacherId === userDocRef.data().uid && (
+                  <button
+                    className="sessionButton"
+                    onClick={() => {
+                      setRoomStatus("active");
+                      setStartedTime(
+                        new Date(
+                          Date.parse(room?.startedTime) + sessionTime
+                        ).toString()
+                      );
+                    }}>
+                    Clickhere
+                  </button>
+                )}
               {(room?.roomStatus === "active" ||
                 room?.roomStatus === "session-prepare") && (
                 <div className="timerContainer">
@@ -230,16 +260,9 @@ const RoomView = ({ participants, meetingId }) => {
                     <PromptPortal teacherInfo={timeline[stopIndex]} />
                   </PortalContainer>
                 )}
-              {timeline && (
-                <ScriptBox
-                  timeline={timeline}
-                  participantsList={participantsList}
-                  room={room}
-                  stopIndex={stopIndex}
-                />
-              )}
+              <div className="FeatureContainer">{featureSelect()}</div>
               <div className="ControlButtonsContainer --justifyContentRight">
-                <FeatureButtons />
+                <FeatureButtons setFeatureSelection={setFeatureSelection} />
               </div>
             </div>
           </div>

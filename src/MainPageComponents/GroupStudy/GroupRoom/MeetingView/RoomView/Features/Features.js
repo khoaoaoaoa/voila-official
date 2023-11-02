@@ -16,17 +16,13 @@ const Features = ({
   return (
     <>
       <div className="Features">
-
         {/* <ParticipantsList participantsList={participantsList}/> */}
         {timeline && (
           <ScriptBox
             timeline={timeline}
             participantsList={participantsList}
             room={room}
-            setTime={setTime}
-            time={time}
             stopIndex={stopIndex}
-            setStopIndex={setStopIndex}
           />
         )}
       </div>

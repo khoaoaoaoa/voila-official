@@ -15,12 +15,21 @@ import JoinScreen from "./JoinScreen/JoinScreen";
 import { useNavigate } from "react-router-dom";
 import { roomsColRef } from "../../../Firebase/config";
 import { Outlet } from "react-router-dom";
+import { useParams } from "react-router-dom";
 function GroupRoom() {
+  const { meetingId: meetingParamsId } = useParams();
   const [meetingId, setMeetingId] = useState(null);
   const navigate = useNavigate();
   const { userDocRef } = useAuthContext();
   const [waitForRoom, setWaitForRoom] = useState(true);
-  const [isHost, setIsHost] = useState(false);
+
+  //MeetingParams
+  useEffect(() => {
+    if (meetingParamsId) {
+      getMeetingAndToken(meetingParamsId);
+      setWaitForRoom(false);
+    }
+  }, [meetingParamsId]);
   //Getting the meeting id by calling the api we just wrote
   const getMeetingAndToken = async (id) => {
     const meetingId =
@@ -33,7 +42,6 @@ function GroupRoom() {
   //This will set Meeting Id to null when meeting is left or ended
   const onMeetingLeave = () => {
     setMeetingId(null);
- 
   };
   const handleCreateRoomFirebase = async (id) => {
     try {
@@ -44,7 +52,6 @@ function GroupRoom() {
       });
 
       toast.success("Đăng ký thành công!");
-      setIsHost(true);
     } catch (err) {
       toast.error(err.message);
     }
@@ -61,7 +68,10 @@ function GroupRoom() {
         }}
         token={authToken}>
         <Outlet
-          context={{ meetingId: meetingId, onMeetingLeave: onMeetingLeave, isHost: isHost}}
+          context={{
+            meetingId: meetingId,
+            onMeetingLeave: onMeetingLeave,
+          }}
         />
       </MeetingProvider>
     </>
