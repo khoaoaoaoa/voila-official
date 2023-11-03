@@ -53,7 +53,7 @@ function MeetingView() {
     } else {
       joinWaitingScreen();
     }
-  }, []);
+  }, [room]);
 
   const phaseDisplay = () => {
     if (joined && joined == "FORM") {
