@@ -55,6 +55,9 @@ const RoomView = ({ participants, meetingId }) => {
   useEffect(() => {
     updateRoomStatus({ startedTimePrepareTimer: startedTimePrepareTimer });
   }, [startedTimePrepareTimer]);
+  useEffect(()=>{
+    updateRoomStatus({ stopIndex: stopIndex });
+  }, [stopIndex]);
 
   useEffect(() => {
     onSnapshot(doc(roomsColRef, meetingId), (snapshot) => {
@@ -110,9 +113,9 @@ const RoomView = ({ participants, meetingId }) => {
     if (
       miliseconds > timeStop &&
       timeStop != 0 &&
-      stopIndex + 1 <= timeline.length - 1
+      room?.stopIndex + 1 <= timeline.length - 1
     ) {
-      const nextIndex = stopIndex + 1;
+      const nextIndex = room?.stopIndex + 1;
       setStopIndex(nextIndex);
       if (nextIndex + 1 <= timeline.length - 1) {
         const hours = timeline[nextIndex + 1].time.substring(0, 2);
@@ -143,7 +146,7 @@ const RoomView = ({ participants, meetingId }) => {
       setTimeStop(hours * 60 * 60 * 1000 + minutes * 60 * 1000);
     }
     console.log(time);
-    console.log("stopindex" + stopIndex);
+    console.log("stopindex" + room?.stopIndex);
     console.log("miliseconds" + miliseconds);
     console.log(timeStop);
     console.log("Status:" + room?.roomStatus);
@@ -189,14 +192,14 @@ const RoomView = ({ participants, meetingId }) => {
           timeline={timeline}
           participantsList={participantsList}
           room={room}
-          stopIndex={stopIndex}
+          stopIndex={room?.stopIndex}
         />
       );
     } else if (featureSelection === "ParticipantsList" && participantsList) {
       return <ParticipantsList participantsList={participantsList} />;
     }
   };
-  console.log(timeline[stopIndex]?.teacherId);
+  console.log(timeline[room?.stopIndex]?.teacherId);
   console.log(userDocRef.data().uid);
   //---FeatureSelection
   return (
@@ -219,7 +222,7 @@ const RoomView = ({ participants, meetingId }) => {
                   </button>
                 )}
               {room?.roomStatus === "session-prepare" &&
-                timeline[stopIndex]?.teacherId === userDocRef.data().uid && (
+                timeline[room?.stopIndex]?.teacherId === userDocRef.data().uid && (
                   <button
                     className="sessionButton"
                     onClick={() => {
@@ -249,7 +252,7 @@ const RoomView = ({ participants, meetingId }) => {
                 {[...participants.keys()].map((participantId) => (
                   <>
                     <ScreenShareView
-                      stopIndex={stopIndex}
+                      stopIndex={room?.stopIndex}
                       participantId={participantId}
                       key={participantId}
                     />
@@ -260,7 +263,7 @@ const RoomView = ({ participants, meetingId }) => {
                     <ParticipantView
                       participantsList={participantsList}
                       timeline={timeline}
-                      stopIndex={stopIndex}
+                      stopIndex={room?.stopIndex}
                       participantId={participantId}
                       key={participantId}
                       room={room}
@@ -275,11 +278,11 @@ const RoomView = ({ participants, meetingId }) => {
 
             <div className="FeatureSide">
               {room?.isPromptPortalOpen &&
-                timeline[stopIndex].teacherId === userDocRef.data().uid && (
+                timeline[room?.stopIndex].teacherId === userDocRef.data().uid && (
                   <PortalContainer
                     className="PromptPortalContainer"
                     onClose={() => setIsPromptPortalOpen(false)}>
-                    <PromptPortal teacherInfo={timeline[stopIndex]} />
+                    <PromptPortal teacherInfo={timeline[room?.stopIndex]} />
                   </PortalContainer>
                 )}
               <div className="FeatureContainer">{featureSelect()}</div>
