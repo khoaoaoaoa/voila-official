@@ -29,6 +29,7 @@
     "react-dom": "^18.2.0",
     "react-draggable": "^4.4.5",
     "react-globe.gl": "^2.24.3",
+    "react-highlight-within-textarea": "^3.2.1",
     "react-media-recorder": "^1.6.5",
     "react-media-recorder-2": "^1.6.23",
     "react-parallax-tilt": "^1.7.161",

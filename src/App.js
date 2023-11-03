@@ -46,21 +46,13 @@ function App() {
                 </SpinnerLoading>
               }>
               {" "}
-              <Route index element={<FeynmanTechnique />} />
               <Route path="feynmanTechnique" element={<FeynmanTechnique />} />
-              <Route path="social-media" element={<SocialMedia />}>
-                <Route index element={<ContentSide />} />
-                <Route path="newPost" element={<NewPost />} />
-                <Route path="news" element={<ContentSide />} />
-              </Route>
-              <Route path="materials" element={<Materials />} />
               <Route path="groupStudy" element={<GroupStudy />}>
                 <Route path="personalRoom" element={<PersonalRoom />} />
                 <Route path="groupRoom" element={<GroupRoom />}>
                   <Route path=":meetingId" element={<MeetingView />} />
                 </Route>
               </Route>
-              <Route path="flashcardsReview" element={<FlashcardsReview />} />
             </Route>
 
             <Route
@@ -87,4 +79,14 @@ function App() {
   );
 }
 
+{
+  /* <Route path="flashcardsReview" element={<FlashcardsReview />} />
+<Route path="materials" element={<Materials />} />
+<Route path="social-media" element={<SocialMedia />}>
+                <Route index element={<ContentSide />} />
+                <Route path="newPost" element={<NewPost />} />
+                <Route path="news" element={<ContentSide />} />
+              </Route>
+              <Route index element={<FeynmanTechnique />} /> */
+}
 export default App;

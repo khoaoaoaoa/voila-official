@@ -95,25 +95,12 @@ const Navbar = ({ GoalBar, Outlet }) => {
                   </p>
                 </div>
               </MenuItem>
-              <MenuItem
-                icon={<FontAwesomeIcon icon={faBook} />}
-                component={<Link to="materials" />}
-                active={location.pathname.includes("/main/materials")}>
-                {" "}
-                Tài liệu
-              </MenuItem>
+              
               <MenuItem
                 icon={<FontAwesomeIcon icon={faGear} />}
                 component={<Link to="feynmanTechnique" />}
                 active={location.pathname.includes("/main/feynmanTechnique")}>
                 Kỹ thuật Feynman
-              </MenuItem>
-              <MenuItem
-                icon={<FontAwesomeIcon icon={faShareNodes} />}
-                component={<Link to="socialMedia" />}
-                active={location.pathname.includes("/main/socialMedia")}>
-                {" "}
-                Cộng đồng học tập Voila!
               </MenuItem>
               <MenuItem
                 icon={<FontAwesomeIcon icon={faPeopleGroup} />}
@@ -122,13 +109,7 @@ const Navbar = ({ GoalBar, Outlet }) => {
                 {" "}
                 Học nhóm
               </MenuItem>
-              <MenuItem
-                icon={<FontAwesomeIcon icon={faGraduationCap} />}
-                component={<Link to="flashcardsReview" />}
-                active={location.pathname.includes("/main/flashcardsReview")}>
-                {" "}
-                Ôn tập bài học
-              </MenuItem>
+             
             </div>
             <div
               style={{ height: "100%" }}
@@ -171,4 +152,26 @@ const Navbar = ({ GoalBar, Outlet }) => {
   );
 };
 
+
+{/* <MenuItem
+icon={<FontAwesomeIcon icon={faGraduationCap} />}
+component={<Link to="flashcardsReview" />}
+active={location.pathname.includes("/main/flashcardsReview")}>
+{" "}
+Ôn tập bài học
+</MenuItem>
+ <MenuItem
+                icon={<FontAwesomeIcon icon={faShareNodes} />}
+                component={<Link to="socialMedia" />}
+                active={location.pathname.includes("/main/socialMedia")}>
+                {" "}
+                Cộng đồng học tập Voila!
+              </MenuItem>
+              <MenuItem
+                icon={<FontAwesomeIcon icon={faBook} />}
+                component={<Link to="materials" />}
+                active={location.pathname.includes("/main/materials")}>
+                {" "}
+                Tài liệu
+              </MenuItem> */}
 export default Navbar;

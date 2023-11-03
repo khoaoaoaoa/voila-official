@@ -1,0 +1,130 @@
+.FeynmanTechnique {
+  width: 100%;
+  height: 100%;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: row;
+}
+.TextareaContainer {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+.ReviewPanelContainer {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  border-radius: 1rem;
+  padding: 1rem;
+  height: 100%;
+  margin-left: 2rem;
+  width: 40%;
+}
+.ReviewPanel {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  flex-direction: column;
+}
+.submitChatGPTButton {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  background-color: #44b16b;
+  flex-shrink: 0;
+  color: white;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+.ReadingEaseContainer {
+  position: relative;
+  width: 100%;
+  
+}
+.langbtn {
+  position: absolute;
+  width: 40px;
+  height: 25px;
+  color: white;
+  font-weight: bold;
+  top: 0;
+  right: 0;
+}
+.--vie {
+  background-color: red;
+}
+.--eng {
+  background-color: blue;
+}
+.blue {
+  background-color: #a3daff;
+}
+
+.red {
+  background-color: #ffc9c9;
+}
+
+.yellow {
+  background-color: #ffec99;
+}
+.--wordZIndex {
+    z-index: 10;
+}
+.--sentenceZIndex {
+    z-index: 5;
+}
+.ComplexityContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 1rem 0;
+}
+.ComplexityComponent{
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+.ComplexitySentenceCount{
+    width: 25px;
+    height: 25px;
+    padding: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-color: black;
+    font-weight: bold;
+}
+.ComplexityWordCount{
+    width: 25px;
+    height: 25px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #163F58;
+    background-color: #ffec99;
+    font-weight: bold;
+}
+.SuggestionsContainer{
+    display: flex;
+    flex-direction: column;
+}
+.SuggestionsComponent{
+    margin: 0.5rem 0;
+    display: flex;
+    flex-direction: column;
+}
+.SuggestionWord{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5rem;
+    padding: 0.5rem 0.75rem;
+    background-color: #F95B02;
+    color: white;
+    font-weight: bold;
+    font-size: 0.75rem;
+}

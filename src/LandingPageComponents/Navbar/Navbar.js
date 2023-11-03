@@ -90,7 +90,7 @@ const Navbar = () => {
         </div>
         {user ? (
           <motion.button
-            onClick={() => navigate("main", { replace: true })}
+            onClick={() => navigate("main/groupStudy", { replace: true })}
             className=" SignUpNavbtn --btn"
             whileHover={{ scale: 1.2 }}
             whileTap={{ scale: 0.8 }}>
