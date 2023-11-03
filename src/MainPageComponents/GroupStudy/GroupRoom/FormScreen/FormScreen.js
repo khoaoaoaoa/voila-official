@@ -52,6 +52,9 @@ const FormScreen = ({ meetingId, joinWaitingScreen }) => {
     onSnapshot(timelineQuery, (snapshot) => {
       setTimeline(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
+    onSnapshot(doc(roomsColRef, meetingId), (doc) => {
+      setRoomName(doc.data().roomName);
+    });
   }, []);
 
   return (
@@ -63,6 +66,7 @@ const FormScreen = ({ meetingId, joinWaitingScreen }) => {
             className="formScreenInput"
             type="text"
             name="roomName"
+            value={roomName}
             onChange={(e) => {
               setRoomName(e.target.value);
             }}

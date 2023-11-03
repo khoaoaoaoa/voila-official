@@ -3,19 +3,18 @@ import "./MeetingView.css";
 import { useMeeting } from "@videosdk.live/react-sdk";
 import { useState, useEffect } from "react";
 import FormScreen from "../FormScreen/FormScreen";
-import { setDoc, doc, deleteDoc } from "firebase/firestore";
+import { setDoc, deleteDoc } from "firebase/firestore";
 import { roomsColRef } from "../../../../Firebase/config";
 import RoomView from "./RoomView/RoomView";
 import { useAuthContext } from "../../../../Context/AuthContext";
+import { doc, getDoc } from "firebase/firestore";
 import { useOutletContext } from "react-router-dom";
-import { useParams } from "react-router-dom";
 function MeetingView() {
   const [joined, setJoined] = useState("");
-  const { meetingId: meetingParamsId } = useParams();
-  const [participantsList, setParticipantsList] = useState([]);
   const { userDocRef } = useAuthContext();
-  const { meetingId, onMeetingLeave, isHost } = useOutletContext();
-  console.log(meetingId);
+  const { meetingId, onMeetingLeave } = useOutletContext();
+  const roomDocRef = doc(roomsColRef, meetingId);
+  const [room, setRoom] = useState(null);
   const { join, participants } = useMeeting({
     //callback for when meeting is joined successfully
     onMeetingJoined: async () => {
@@ -41,14 +40,23 @@ function MeetingView() {
   const joinWaitingScreen = () => {
     setJoined("WAIT");
   };
+  const getRoomDocRefData = async () => {
+    const docData = await getDoc(roomDocRef);
+    setRoom(docData.data());
+  };
   useEffect(() => {
-    if (isHost) {
+    getRoomDocRefData();
+  }, []);
+  useEffect(() => {
+    if (userDocRef?.data()?.uid === room?.hostId) {
       setJoined("FORM");
     } else {
       joinWaitingScreen();
     }
-  }, []);
-
+  }, [room]);
+  console.log (room?.hostId);
+  console.log(userDocRef?.data()?.uid);
+  console.log(joined);
   const phaseDisplay = () => {
     if (joined && joined == "FORM") {
       return (
@@ -68,7 +76,8 @@ function MeetingView() {
       return <p>Joining</p>;
     } else if (joined && joined == "JOINED") {
       return <RoomView participants={participants} meetingId={meetingId} />;
-    }
+    } 
+    
   };
   return <>{phaseDisplay()}</>;
 }

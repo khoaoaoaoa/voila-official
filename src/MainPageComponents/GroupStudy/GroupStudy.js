@@ -3,10 +3,13 @@ import GroupRoom from "./GroupRoom/GroupRoom";
 import PersonalRoom from "./PersonalRoom/PersonalRoom";
 import SelectRoom from "./SelectRoom/SelectRoom";
 import { Outlet, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 const GroupStudy = () => {
+  let location = useLocation();
   const [roomType, setRoomType] = useState(null);
   const navigate = useNavigate();
-
+  console.log(location);
   const selectRoomFunc = () => {
     if (roomType === "PersonalRoom") {
       navigate("personalRoom");
@@ -14,17 +17,30 @@ const GroupStudy = () => {
       navigate("groupRoom");
     }
   };
+  
   useEffect(() => {
     selectRoomFunc();
   }, [roomType]);
   console.log(roomType);
+  useEffect(() => {
+    if (location.pathname.includes("/main/groupStudy/groupRoom")) {
+      setRoomType("meetingOK");
+    } else if (location.pathname.includes("/main/groupStudy")) {
+      setRoomType(null);
+    }
+  }, [location]);
+
   return (
     <>
       <div className="GroupStudyBackground">
         {roomType ? (
-          <Outlet />
+          <>
+            <Outlet />
+          </>
         ) : (
-          <SelectRoom roomType={roomType} setRoomType={setRoomType} />
+          <>
+            <SelectRoom roomType={roomType} setRoomType={setRoomType} />
+          </>
         )}
       </div>
     </>

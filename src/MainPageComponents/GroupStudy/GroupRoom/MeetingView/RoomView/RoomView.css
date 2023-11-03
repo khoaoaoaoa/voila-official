@@ -35,10 +35,16 @@
   display: flex;
   flex-direction: column;
   margin-left: 2rem;
-  min-width: 27.5%;
+  width: 27.5%;
+  height: 100%;
+}
+.FeatureContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 .CameraSideContainer {
-  width: 100%;
+  width: 72.5%;
   height: 100%;
   display: flex;
   flex-direction: column;

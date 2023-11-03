@@ -11,12 +11,14 @@ import { roomsColRef } from "../../../../../Firebase/config";
 import "./RoomView.css";
 import { query, orderBy } from "firebase/firestore";
 import { useAuthContext } from "../../../../../Context/AuthContext";
+import ParticipantsList from "./Features/ParticipantsList/ParticipantsList";
 import ScriptBox from "./Features/ScriptBox/ScriptBox";
+import ChatBox from "./Features/ChatBox/ChatBox";
 import { toast } from "react-toastify";
 const RoomView = ({ participants, meetingId }) => {
   const [timeStop, setTimeStop] = useState(0);
   const [isPromptPortalOpen, setIsPromptPortalOpen] = useState(false);
-  const [startedTime, setStartedTime] = useState(null);
+  const [startedTimePrepareTimer, setStartedTimePrepareTimer] = useState(null);
   const [room, setRoom] = useState(null);
   const [roomStatus, setRoomStatus] = useState("inactive");
   const [time, setTime] = useState({
@@ -28,6 +30,9 @@ const RoomView = ({ participants, meetingId }) => {
   const [sessionTime, setSessionTime] = useState(null);
   const [timeline, setTimeline] = useState([]);
   const [participantsList, setParticipantsList] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const [intervalID, setIntervalID] = useState(0);
+  const [featureSelection, setFeatureSelection] = useState("ScriptBox");
   const timelineSubColRef = collection(roomsColRef, `${meetingId}`, "timeline");
   const timelineQuery = query(timelineSubColRef, orderBy("time"));
   const participantsSubColRef = collection(
@@ -35,14 +40,21 @@ const RoomView = ({ participants, meetingId }) => {
     `${meetingId}`,
     "participants"
   );
+  const messagesSubColRef = collection(roomsColRef, `${meetingId}`, "messages");
   const { userDocRef } = useAuthContext();
 
   const updateRoomStatus = async (data) => {
     await updateDoc(doc(roomsColRef, meetingId), data);
   };
   useEffect(() => {
-    updateRoomStatus({ roomStatus: roomStatus, startedTime: startedTime });
-  }, [roomStatus, startedTime]);
+    updateRoomStatus({ roomStatus: roomStatus });
+  }, [roomStatus]);
+  useEffect(() => {
+    updateRoomStatus({ isPromptPortalOpen: isPromptPortalOpen });
+  }, [isPromptPortalOpen]);
+  useEffect(() => {
+    updateRoomStatus({ startedTimePrepareTimer: startedTimePrepareTimer });
+  }, [startedTimePrepareTimer]);
 
   useEffect(() => {
     onSnapshot(doc(roomsColRef, meetingId), (snapshot) => {
@@ -55,6 +67,9 @@ const RoomView = ({ participants, meetingId }) => {
       setParticipantsList(
         snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
       );
+    });
+    onSnapshot(messagesSubColRef, (snapshot) => {
+      setMessages(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
   }, []);
 
@@ -70,7 +85,7 @@ const RoomView = ({ participants, meetingId }) => {
       const hours = Math.floor((time / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((time / 1000 / 60) % 60);
       const seconds = Math.floor((time / 1000) % 60);
-
+      console.log(room);
       if (hours < 10) {
         setTime((prev) => ({ ...prev, hours: `0${hours}` }));
       } else {
@@ -106,6 +121,7 @@ const RoomView = ({ participants, meetingId }) => {
       }
       setRoomStatus("session-prepare");
       setIsPromptPortalOpen(true);
+      setStartedTimePrepareTimer(new Date().toString());
       toast(
         `🚀 ${timeline[nextIndex].time} - ${timeline[nextIndex].content} - ${timeline[nextIndex].teacherName}`,
         {
@@ -127,30 +143,62 @@ const RoomView = ({ participants, meetingId }) => {
       setTimeStop(hours * 60 * 60 * 1000 + minutes * 60 * 1000);
     }
     console.log(time);
-    console.log(stopIndex);
-    console.log(miliseconds);
+    console.log("stopindex" + stopIndex);
+    console.log("miliseconds" + miliseconds);
     console.log(timeStop);
     console.log("Status:" + room?.roomStatus);
   }, [time]);
 
   //---time logic ---
   // --session-prepare-time-logic
+  console.log(room?.roomStatus !== "session-prepare");
+  console.log("co prepare timer khong?" + !room?.startedTimePrepareTimer);
+  console.log(
+    "xet dieu kien if" +
+      (room?.roomStatus !== "session-prepare" || !room?.startedTimePrepareTimer)
+  );
   useEffect(() => {
-    const date = Date.now();
-    const interval = setInterval(() => {
-      if (room?.roomStatus !== "session-prepare") return;
-      //time format is ms
-      const time = Date.now() - date;
-      setSessionTime(time);
-    }, 1000);
-    if (room?.roomStatus === "active") {
-      clearInterval(interval);
+    if (
+      room?.roomStatus === "session-prepare" &&
+      room?.startedTimePrepareTimer
+    ) {
+      const interval = setInterval(() => {
+        const time = Date.now() - Date.parse(room?.startedTimePrepareTimer);
+        setSessionTime(time);
+        console.log(time);
+      }, 1000);
+      setIntervalID(interval);
     }
-  }, [room?.roomStatus]);
+    else if (room?.roomStatus === "active") {
+      clearInterval(intervalID);
+      setStartedTimePrepareTimer(null);
+    }
+  }, [room?.roomStatus, room?.startedTimePrepareTimer]);
   // --session-prepare-time-logic
-  console.log(startedTime)
+
   // console.log(timeline);
   // console.log(participantsList);
+
+  //---FeatureSelection
+  const featureSelect = () => {
+    if (featureSelection === "ChatBox") {
+      return <ChatBox meetingId={meetingId} messages={messages} />;
+    } else if (featureSelection === "ScriptBox" && timeline) {
+      return (
+        <ScriptBox
+          timeline={timeline}
+          participantsList={participantsList}
+          room={room}
+          stopIndex={stopIndex}
+        />
+      );
+    } else if (featureSelection === "ParticipantsList" && participantsList) {
+      return <ParticipantsList participantsList={participantsList} />;
+    }
+  };
+  console.log(timeline[stopIndex]?.teacherId);
+  console.log(userDocRef.data().uid);
+  //---FeatureSelection
   return (
     <>
       {room?.roomStatus && timeline && participantsList && (
@@ -164,23 +212,27 @@ const RoomView = ({ participants, meetingId }) => {
                     className="ValidateParticipantsButton"
                     onClick={() => {
                       setRoomStatus("active");
-                      setStartedTime(new Date().toString());
+
+                      updateRoomStatus({ startedTime: new Date().toString() });
                     }}>
                     Bắt đầu buổi học!
                   </button>
                 )}
-              {room?.roomStatus === "session-prepare" && (
-                <button
-                  className="sessionButton"
-                  onClick={() => {
-                    setRoomStatus("active");
-                    setStartedTime(
-                      new Date(Date.parse(room?.startedTime) + sessionTime).toString()
-                    );
-                  }}>
-                  Clickhere
-                </button>
-              )}
+              {room?.roomStatus === "session-prepare" &&
+                timeline[stopIndex]?.teacherId === userDocRef.data().uid && (
+                  <button
+                    className="sessionButton"
+                    onClick={() => {
+                      setRoomStatus("active");
+                      updateRoomStatus({
+                        startedTime: new Date(
+                          Date.parse(room?.startedTime) + sessionTime
+                        ).toString(),
+                      });
+                    }}>
+                    Clickhere
+                  </button>
+                )}
               {(room?.roomStatus === "active" ||
                 room?.roomStatus === "session-prepare") && (
                 <div className="timerContainer">
@@ -222,7 +274,7 @@ const RoomView = ({ participants, meetingId }) => {
             </div>
 
             <div className="FeatureSide">
-              {isPromptPortalOpen &&
+              {room?.isPromptPortalOpen &&
                 timeline[stopIndex].teacherId === userDocRef.data().uid && (
                   <PortalContainer
                     className="PromptPortalContainer"
@@ -230,16 +282,9 @@ const RoomView = ({ participants, meetingId }) => {
                     <PromptPortal teacherInfo={timeline[stopIndex]} />
                   </PortalContainer>
                 )}
-              {timeline && (
-                <ScriptBox
-                  timeline={timeline}
-                  participantsList={participantsList}
-                  room={room}
-                  stopIndex={stopIndex}
-                />
-              )}
+              <div className="FeatureContainer">{featureSelect()}</div>
               <div className="ControlButtonsContainer --justifyContentRight">
-                <FeatureButtons />
+                <FeatureButtons setFeatureSelection={setFeatureSelection} />
               </div>
             </div>
           </div>
