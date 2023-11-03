@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 const GroupStudy = () => {
   let location = useLocation();
+  const { meetingId: meetingParamsId } = useParams();
   const [roomType, setRoomType] = useState(null);
   const navigate = useNavigate();
   console.log(location);
@@ -18,6 +19,11 @@ const GroupStudy = () => {
     }
   };
   
+  useEffect(() => {
+    if(meetingParamsId){
+      setRoomType("meetingParamsId");
+    }
+  }, [meetingParamsId])
   useEffect(() => {
     selectRoomFunc();
   }, [roomType]);
