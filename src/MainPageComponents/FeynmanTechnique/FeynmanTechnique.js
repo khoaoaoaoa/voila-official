@@ -98,7 +98,7 @@ const FeynmanTechnique = () => {
                   {responseObj?.TuPhucTap.map((word, index) => {
                     return(<>
                     <hr/>
-                      <div className="SuggestionsComponent">
+                      <div className="SuggestionsComponent" key={index}>
                         <h4>{word}</h4>
                         <p style={{margin: "0.5rem 0"}}>Từ thay thế: <span className="SuggestionWord">{responseObj?.TuThayThe[index]}</span></p>
                       </div>
