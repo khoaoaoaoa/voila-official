@@ -49,13 +49,11 @@ const RoomView = ({ participants, meetingId }) => {
   useEffect(() => {
     updateRoomStatus({ roomStatus: roomStatus });
   }, [roomStatus]);
-  useEffect(() => {
-    updateRoomStatus({ isPromptPortalOpen: isPromptPortalOpen });
-  }, [isPromptPortalOpen]);
+
   useEffect(() => {
     updateRoomStatus({ startedTimePrepareTimer: startedTimePrepareTimer });
   }, [startedTimePrepareTimer]);
-  useEffect(()=>{
+  useEffect(() => {
     updateRoomStatus({ stopIndex: stopIndex });
   }, [stopIndex]);
 
@@ -88,7 +86,6 @@ const RoomView = ({ participants, meetingId }) => {
       const hours = Math.floor((time / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((time / 1000 / 60) % 60);
       const seconds = Math.floor((time / 1000) % 60);
-      console.log(room);
       if (hours < 10) {
         setTime((prev) => ({ ...prev, hours: `0${hours}` }));
       } else {
@@ -112,6 +109,7 @@ const RoomView = ({ participants, meetingId }) => {
     const miliseconds = time.minutes * 60 * 1000 + time.seconds * 1000;
     if (
       miliseconds > timeStop &&
+      miliseconds <= timeStop + 1000 &&
       timeStop != 0 &&
       room?.stopIndex + 1 <= timeline.length - 1
     ) {
@@ -148,18 +146,12 @@ const RoomView = ({ participants, meetingId }) => {
     console.log(time);
     console.log("stopindex" + room?.stopIndex);
     console.log("miliseconds" + miliseconds);
-    console.log(timeStop);
+    console.log("timeStop" + timeStop);
     console.log("Status:" + room?.roomStatus);
   }, [time]);
 
   //---time logic ---
   // --session-prepare-time-logic
-  console.log(room?.roomStatus !== "session-prepare");
-  console.log("co prepare timer khong?" + !room?.startedTimePrepareTimer);
-  console.log(
-    "xet dieu kien if" +
-      (room?.roomStatus !== "session-prepare" || !room?.startedTimePrepareTimer)
-  );
   useEffect(() => {
     if (
       room?.roomStatus === "session-prepare" &&
@@ -171,8 +163,7 @@ const RoomView = ({ participants, meetingId }) => {
         console.log(time);
       }, 1000);
       setIntervalID(interval);
-    }
-    else if (room?.roomStatus === "active") {
+    } else if (room?.roomStatus === "active") {
       clearInterval(intervalID);
       setStartedTimePrepareTimer(null);
     }
@@ -199,8 +190,6 @@ const RoomView = ({ participants, meetingId }) => {
       return <ParticipantsList participantsList={participantsList} />;
     }
   };
-  console.log(timeline[room?.stopIndex]?.teacherId);
-  console.log(userDocRef.data().uid);
   //---FeatureSelection
   return (
     <>
@@ -222,11 +211,13 @@ const RoomView = ({ participants, meetingId }) => {
                   </button>
                 )}
               {room?.roomStatus === "session-prepare" &&
-                timeline[room?.stopIndex]?.teacherId === userDocRef.data().uid && (
+                timeline[room?.stopIndex]?.teacherId ===
+                  userDocRef.data().uid && (
                   <button
                     className="sessionButton"
                     onClick={() => {
                       setRoomStatus("active");
+                      setIsPromptPortalOpen(false);
                       updateRoomStatus({
                         startedTime: new Date(
                           Date.parse(room?.startedTime) + sessionTime
@@ -277,8 +268,9 @@ const RoomView = ({ participants, meetingId }) => {
             </div>
 
             <div className="FeatureSide">
-              {room?.isPromptPortalOpen &&
-                timeline[room?.stopIndex].teacherId === userDocRef.data().uid && (
+              {isPromptPortalOpen &&
+                timeline[room?.stopIndex].teacherId ===
+                  userDocRef.data().uid && (
                   <PortalContainer
                     className="PromptPortalContainer"
                     onClose={() => setIsPromptPortalOpen(false)}>
